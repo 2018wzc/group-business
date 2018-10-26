@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lmgroup.groupbusiness.dao.businessDao.BusinessResDao">
+    <resultMap id="BusinessRes" type="com.lmgroup.groupbusiness.domain.business.BusinessResVO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="res_name" property="name" jdbcType="VARCHAR"/>
+        <result column="pid" property="pid" jdbcType="INTEGER"/>
+        <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, res_name, pid,state,creator,creat_time
+    </sql>
+    <select id="listInfo" resultMap="BusinessRes" parameterType="hashmap">
+        select
+        <include refid="Base_Column_List"/>
+        from business_res LIMIT #{currentPage},#{pageSize}
+    </select>
+    <select id="dataInfo" resultMap="BusinessRes" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from business_res
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="queryByPid" resultMap="BusinessRes" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from business_res
+        where pid = #{pid,jdbcType=INTEGER} and state=1
+    </select>
+
+    <insert id="addBusiness" parameterType="com.lmgroup.groupbusiness.domain.business.BusinessResVO">
+        INSERT INTO business_res(res_name,pid,creator,creat_time,state) VALUES(#{name},#{pid},#{creator},#{creatTime},#{state})
+    </insert>
+    <update id="updateInfo"   parameterType="com.lmgroup.groupbusiness.domain.business.BusinessResVO">
+        update business_res
+        <set>
+            <if test="name!=null">
+                res_name=#{name},
+            </if>
+            <if test="pid!=null">
+                pid=#{pid},
+            </if>
+            <if test="state!=null">
+                state=#{state},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+</mapper>

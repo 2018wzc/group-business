@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lmgroup.groupbusiness.dao.businessDao.BussinessDao">
+    <resultMap id="BaseResultMap" type="com.lmgroup.groupbusiness.domain.business.BussinessVO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="bus_name" property="name" jdbcType="VARCHAR"/>
+        <result column="english_name" property="englisName" jdbcType="VARCHAR"/>
+        <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, bus_name, english_name,state,creat_time
+    </sql>
+    <select id="listInfo" resultMap="BaseResultMap" parameterType="hashmap">
+        select
+        <include refid="Base_Column_List"/>
+        from business LIMIT #{currentPage},#{pageSize}
+    </select>
+    <select id="list" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from business where state=1
+    </select>
+    <select id="dataInfo" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from business
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <insert id="addBusiness" parameterType="com.lmgroup.groupbusiness.domain.business.BussinessVO">
+        INSERT INTO BUSINESS(bus_name,english_name,creator,creat_time,state) VALUES(#{name},#{englisName},#{creator},#{creatTime},#{state})
+    </insert>
+    <update id="updateBusiness" parameterType="com.lmgroup.groupbusiness.domain.business.BussinessVO">
+        update BUSINESS
+        <set>
+            <if test="name!=null">
+                bus_name=#{name},
+            </if>
+            <if test="englisName!=null">
+                english_name=#{englisName},
+            </if>
+            <if test="state!=null">
+                state=#{state},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+</mapper>

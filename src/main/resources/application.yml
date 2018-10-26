@@ -1,0 +1,8 @@
+#��������Դ
+spring:
+  profiles:
+    active: dev
+
+
+
+
