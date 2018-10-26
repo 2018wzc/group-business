@@ -1,8 +1,13 @@
 package com.lmgroup.groupbusiness.controller.business;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lmgroup.groupbusiness.domain.business.BusinessResVO;
@@ -18,11 +23,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/businessRes")
+@Api(tags = "集团商城子业务菜单")
 public class BusinessResAction extends commonAction {
     private static Logger logger = Logger.getLogger(BusinessResAction.class);
 
     @Autowired
     private BusinessResService businessResService;
+
     /**
      * 查询集团商城子业务菜单列表-后台分页查询
      *
@@ -30,7 +37,14 @@ public class BusinessResAction extends commonAction {
      * @param req
      * @throws Exception
      */
-    @RequestMapping(value = "/list")
+    @ApiOperation(value = "集团商城子业务菜单查询-分页查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageSize", value = "页面大小", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "currentPage", value = "当前第几页", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void list(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int pageSize = Integer.parseInt(req.getParameter("pageSize"));
@@ -39,13 +53,23 @@ public class BusinessResAction extends commonAction {
         int count = list.size();
         sendPageResult(resp, list, count);
     }
+
     /**
      * 新增集团商城子业务菜单
      *
      * @param
      * @return
      */
-    @RequestMapping(value = "/add")
+    @ApiOperation(value = "集团商城子业务菜单新增")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name", value = "集团子业务菜单名称", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "pid", value = "父业务菜单id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void add(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         String name = req.getParameter("name");
@@ -63,7 +87,13 @@ public class BusinessResAction extends commonAction {
      * @param
      * @return
      */
-    @RequestMapping(value = "/data")
+    @ApiOperation(value = "集团商城子业务菜单详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "子业务菜单id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/data", method = RequestMethod.POST)
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void data(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int id = Integer.parseInt(req.getParameter("id"));
@@ -73,13 +103,21 @@ public class BusinessResAction extends commonAction {
         BusinessResVO bussinessVO = businessResService.data(id);
         sendResult(resp, bussinessVO);
     }
+
     /**
      * 修改集团商城子业务菜单
      *
      * @param
      * @return
      */
-    @RequestMapping(value = "/update")
+    @ApiOperation(value = "集团商城子业务菜单修改")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "子业务菜单Id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void update(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int id = Integer.parseInt(req.getParameter("id"));
@@ -100,13 +138,17 @@ public class BusinessResAction extends commonAction {
      * @param
      * @return
      */
-    @RequestMapping(value = "/listByPid")
+    @ApiOperation(value = "根据父业务菜单id查询子业务菜单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pid", value = "父业务菜单Id", dataType = "Integer", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/listByPid", method = RequestMethod.POST)
     public void listByPid(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int pid = Integer.parseInt(req.getParameter("pid"));
         if (pid < 1) {
             throw new ParamException("参数错误");
         }
-        List<BusinessResVO> list=businessResService.queryByPid(pid);
+        List<BusinessResVO> list = businessResService.queryByPid(pid);
         int count = list.size();
         sendPageResult(resp, list, count);
     }
