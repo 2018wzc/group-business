@@ -43,3 +43,16 @@ redis:
     #���ӳ�ʱʱ��(����)
     timeout: 10000
     retryTimes: 5
+
+thymeleaf:
+  suffix: .html
+  prefix: classpath:/templates/
+  check-template-location: true
+  encoding: UTF-8
+  cache: false
+  mode: LEGACYHTML5
+
+mvc:
+  view:
+    prefix: classpath:/templates/
+    suffix: .html

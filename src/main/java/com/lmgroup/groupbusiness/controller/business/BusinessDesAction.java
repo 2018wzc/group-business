@@ -1,5 +1,9 @@
 package com.lmgroup.groupbusiness.controller.business;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/businessDes")
+@Api(tags = "集团商城业务")
 public class BusinessDesAction extends commonAction {
 
     private static Logger logger = Logger.getLogger(BusinessDesAction.class);
@@ -44,7 +49,14 @@ public class BusinessDesAction extends commonAction {
      * @param req
      * @throws Exception
      */
-    @RequestMapping(value = "/list")
+    @ApiOperation(value = "集团商城业务列表-分页查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageSize", value = "页面大小", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "currentPage", value = "当前第几页", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void list(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int pageSize = Integer.parseInt(req.getParameter("pageSize"));
@@ -60,10 +72,24 @@ public class BusinessDesAction extends commonAction {
      * @param
      * @return
      */
+    @ApiOperation(value = "集团商城业务新增")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "image", value = "多个图片文件", dataType = "body", paramType = "query", required = true),
+            @ApiImplicitParam(name = "pid", value = "子业务菜单id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "describ", value = "描述", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "content", value = "内容", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "typeId", value = "业务类型id(对应父业务菜单id)", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "title", value = "业务名称", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+
+    })
     @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "multipart/form-data")
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void add(HttpServletResponse resp, HttpServletRequest req) throws Exception {
-        List<MultipartFile> files =((MultipartHttpServletRequest)req).getFiles("image");
+        List<MultipartFile> files = ((MultipartHttpServletRequest) req).getFiles("image");
         int pid = Integer.parseInt(req.getParameter("pid"));
         String image = "";
         String describ = req.getParameter("describ");
@@ -83,12 +109,12 @@ public class BusinessDesAction extends commonAction {
         if (userVO == null) {
             throw new ParamException("操作用户不存在");
         }
-       if(files==null||files.size()<0){
+        if (files == null || files.size() < 0) {
             throw new ParamException("参数错误");
         }
         for (int i = 0; i < files.size(); i++) {
             MultipartFile file = files.get(i);
-            image+= upLoadFile(file)+";";
+            image += upLoadFile(file) + ";";
         }
         BusinessDesVO businessDesVO = new BusinessDesVO();
         businessDesVO.setPid(pid);
@@ -113,7 +139,13 @@ public class BusinessDesAction extends commonAction {
      * @param
      * @return
      */
-    @RequestMapping(value = "/data")
+    @ApiOperation(value = "集团商城业务详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "业务Id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/data", method = RequestMethod.POST)
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void data(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int id = Integer.parseInt(req.getParameter("id"));
@@ -130,7 +162,14 @@ public class BusinessDesAction extends commonAction {
      * @param
      * @return
      */
-    @RequestMapping(value = "/update")
+    @ApiOperation(value = "集团商城业务修改")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "业务Id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void update(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int id = Integer.parseInt(req.getParameter("id"));
@@ -151,7 +190,11 @@ public class BusinessDesAction extends commonAction {
      * @param
      * @return
      */
-    @RequestMapping(value = "/listByType")
+    @ApiOperation(value = "根据业务类型查询集团商城业务")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "typeId", value = "业务类型Id(对应父业务菜单Id)", dataType = "Integer", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/listByType", method = RequestMethod.POST)
     public void listByType(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int typeId = Integer.parseInt(req.getParameter("typeId"));
         if (typeId < 1) {
@@ -168,7 +211,11 @@ public class BusinessDesAction extends commonAction {
      * @param
      * @return
      */
-    @RequestMapping(value = "/queryByPid")
+    @ApiOperation(value = "根据子业务菜单id查询集团商城业务")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pid", value = "子业务菜单Id", dataType = "Integer", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/queryByPid", method = RequestMethod.POST)
     public void queryByPid(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int pid = Integer.parseInt(req.getParameter("pid"));
         if (pid < 1) {

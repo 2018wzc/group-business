@@ -1,8 +1,13 @@
 package com.lmgroup.groupbusiness.controller.business;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lmgroup.groupbusiness.domain.business.BusinessListVO;
@@ -19,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/business")
+@Api(tags = "集团商城父业务菜单")
 public class BusinessAction extends commonAction {
     private static Logger logger = Logger.getLogger(BusinessAction.class);
 
@@ -33,7 +39,8 @@ public class BusinessAction extends commonAction {
      * @param req
      * @throws Exception
      */
-    @RequestMapping(value = "/list")
+    @ApiOperation(value = "集团商城父业务菜单查询")
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
     public void list(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         List<BusinessListVO> list = bussinessService.list();
         int count = list.size();
@@ -47,7 +54,14 @@ public class BusinessAction extends commonAction {
      * @param req
      * @throws Exception
      */
-    @RequestMapping(value = "/listInfo")
+    @ApiOperation(value = "集团商城父业务菜单查询-分页查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageSize", value = "页面大小", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "currentPage", value = "当前第几页", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/listInfo", method = RequestMethod.POST)
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void listInfo(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int pageSize = Integer.parseInt(req.getParameter("pageSize"));
@@ -63,7 +77,16 @@ public class BusinessAction extends commonAction {
      * @param
      * @return
      */
-    @RequestMapping(value = "/add")
+    @ApiOperation(value = "集团商城父业务菜单新增")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name", value = "父业务菜单名称", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "englishName", value = "父业务菜单英文名称(大写)", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void add(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         String name = req.getParameter("name");
@@ -81,7 +104,13 @@ public class BusinessAction extends commonAction {
      * @param
      * @return
      */
-    @RequestMapping(value = "/data")
+    @ApiOperation(value = "集团商城父业务菜单详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "父业务菜单Id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/data", method = RequestMethod.POST)
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void data(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int id = Integer.parseInt(req.getParameter("id"));
@@ -98,7 +127,14 @@ public class BusinessAction extends commonAction {
      * @param
      * @return
      */
-    @RequestMapping(value = "/update")
+    @ApiOperation(value = "集团商城父业务菜单修改")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "父业务菜单Id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void update(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int id = Integer.parseInt(req.getParameter("id"));
