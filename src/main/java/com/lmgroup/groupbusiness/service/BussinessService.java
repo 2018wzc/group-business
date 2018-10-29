@@ -20,7 +20,7 @@ public interface BussinessService {
      * @param
      * @return
      */
-    void add(String name,String englishName,int state,int adminId) throws Exception;
+    void add(String name,String englishName,int state,int adminId,int reorder) throws Exception;
 
     /**
      * 集团商城父业务菜单详情

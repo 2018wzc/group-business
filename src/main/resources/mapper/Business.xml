@@ -8,10 +8,10 @@
         <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP"/>
         <result column="creator" property="creator" jdbcType="VARCHAR"/>
         <result column="state" property="state" jdbcType="INTEGER"/>
-
+        <result column="reorder" property="reorder" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, bus_name, english_name,state,creat_time
+        id, bus_name, english_name,state,creat_time,reorder
     </sql>
     <select id="listInfo" resultMap="BaseResultMap" parameterType="hashmap">
         select
@@ -21,7 +21,7 @@
     <select id="list" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from business where state=1
+        from business where state=1 order by reorder ASC
     </select>
     <select id="dataInfo" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -30,7 +30,7 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <insert id="addBusiness" parameterType="com.lmgroup.groupbusiness.domain.business.BussinessVO">
-        INSERT INTO BUSINESS(bus_name,english_name,creator,creat_time,state) VALUES(#{name},#{englisName},#{creator},#{creatTime},#{state})
+        INSERT INTO BUSINESS(bus_name,english_name,creator,creat_time,state,reorder) VALUES(#{name},#{englisName},#{creator},#{creatTime},#{state},#{reorder})
     </insert>
     <update id="updateBusiness" parameterType="com.lmgroup.groupbusiness.domain.business.BussinessVO">
         update BUSINESS

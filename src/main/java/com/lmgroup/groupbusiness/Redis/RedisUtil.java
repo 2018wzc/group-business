@@ -9,9 +9,8 @@ public class RedisUtil{
     private static Logger logger = Logger.getLogger(RedisUtil.class);
     private static JedisUtil jedisUtil=JedisUtil.getInstance();
 
-    private static String host="127.0.0.1";
-    private  static int port=6379;
-
+    private static String host="47.106.36.211";
+    private  static int port=6380;
 
     /**
      * 获取Jedis实例

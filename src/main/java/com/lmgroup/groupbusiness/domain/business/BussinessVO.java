@@ -4,15 +4,24 @@ import java.sql.Timestamp;
 
 /**
  * 集团商城业务菜单类
+ *
  * @author wangzichun
  */
 public class BussinessVO {
+
     private int id;
+
     private String name;//业务名称
+
     private String englisName;//英文名称
+
     private Timestamp creatTime;//创建时间
+
     private String creator;//创建人
+
     private int state;//状态,1启用,0禁用(默认)
+
+    private int reorder;//菜单显示优先级
 
     public int getId() {
         return id;
@@ -60,5 +69,13 @@ public class BussinessVO {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public int getReorder() {
+        return reorder;
+    }
+
+    public void setReorder(int reorder) {
+        this.reorder = reorder;
     }
 }

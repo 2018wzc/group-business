@@ -7,11 +7,17 @@ import java.sql.Timestamp;
  * @author wangzichun
  */
 public class BusinessResVO {
+
     private int id;
+
     private String name;//集团子业务名称
+
     private int pid;//父业务id
+
     private int state;//状态,1启用,0禁用
+
     private Timestamp creatTime;//创建时间
+
     private String creator;//创建人
 
     public int getId() {

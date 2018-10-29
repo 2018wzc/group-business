@@ -28,6 +28,8 @@ public class JedisUtil {
 
     private static int retryTims=3;
 
+    private static String password="gTZ1XNU@BUfmtvUH";
+
     private static Logger logger = Logger.getLogger(JedisUtil.class);
 
     /**
@@ -60,7 +62,7 @@ public class JedisUtil {
                  *如果你遇到 java.net.SocketTimeoutException: Read timed out exception的异常信息
                  *请尝试在构造JedisPool的时候设置自己的超时值. JedisPool默认的超时时间是2秒(单位毫秒)
                  */
-                pool = new JedisPool(config, ip, port,timeout);
+                pool = new JedisPool(config, ip, port,timeout,password);
                 maps.put(key, pool);
             } catch(Exception e) {
                 e.printStackTrace();
