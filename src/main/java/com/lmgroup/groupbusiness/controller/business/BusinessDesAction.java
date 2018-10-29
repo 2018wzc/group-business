@@ -51,9 +51,9 @@ public class BusinessDesAction extends commonAction {
      */
     @ApiOperation(value = "集团商城业务列表-分页查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageSize", value = "页面大小", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "currentPage", value = "当前第几页", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "页面大小", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "currentPage", value = "当前第几页", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -72,17 +72,16 @@ public class BusinessDesAction extends commonAction {
      * @param
      * @return
      */
-    @ApiOperation(value = "集团商城业务新增")
+    @ApiOperation(value = "集团商城业务新增(swargger不支持多文件数据类型,导致该接口此处无法测试,请在postman测试该接口)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "image", value = "多个图片文件", dataType = "body", paramType = "query", required = true),
-            @ApiImplicitParam(name = "pid", value = "子业务菜单id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "image", value = "多个图片文件", dataType = "files", paramType = "multipart/form-data", required = true),
+            @ApiImplicitParam(name = "pid", value = "子业务菜单id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "describ", value = "描述", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "content", value = "内容", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "typeId", value = "业务类型id(对应父业务菜单id)", dataType = "Integer", paramType = "query", required = true),
             @ApiImplicitParam(name = "title", value = "业务名称", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
 
     })
@@ -141,8 +140,8 @@ public class BusinessDesAction extends commonAction {
      */
     @ApiOperation(value = "集团商城业务详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "业务Id", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "id", value = "业务Id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/data", method = RequestMethod.POST)
@@ -164,9 +163,9 @@ public class BusinessDesAction extends commonAction {
      */
     @ApiOperation(value = "集团商城业务修改")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "业务Id", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "id", value = "业务Id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -192,7 +191,7 @@ public class BusinessDesAction extends commonAction {
      */
     @ApiOperation(value = "根据业务类型查询集团商城业务")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "typeId", value = "业务类型Id(对应父业务菜单Id)", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "typeId", value = "业务类型Id(对应父业务菜单Id)", dataType = "int", paramType = "query", required = true),
     })
     @RequestMapping(value = "/listByType", method = RequestMethod.POST)
     public void listByType(HttpServletResponse resp, HttpServletRequest req) throws Exception {
@@ -213,7 +212,7 @@ public class BusinessDesAction extends commonAction {
      */
     @ApiOperation(value = "根据子业务菜单id查询集团商城业务")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pid", value = "子业务菜单Id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "pid", value = "子业务菜单Id", dataType = "int", paramType = "query", required = true),
     })
     @RequestMapping(value = "/queryByPid", method = RequestMethod.POST)
     public void queryByPid(HttpServletResponse resp, HttpServletRequest req) throws Exception {

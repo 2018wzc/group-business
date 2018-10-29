@@ -39,9 +39,9 @@ public class BusinessResAction extends commonAction {
      */
     @ApiOperation(value = "集团商城子业务菜单查询-分页查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageSize", value = "页面大小", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "currentPage", value = "当前第几页", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "页面大小", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "currentPage", value = "当前第几页", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -63,10 +63,9 @@ public class BusinessResAction extends commonAction {
     @ApiOperation(value = "集团商城子业务菜单新增")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "集团子业务菜单名称", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "pid", value = "父业务菜单id", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "pid", value = "父业务菜单id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -89,8 +88,8 @@ public class BusinessResAction extends commonAction {
      */
     @ApiOperation(value = "集团商城子业务菜单详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "子业务菜单id", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "id", value = "子业务菜单id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/data", method = RequestMethod.POST)
@@ -112,9 +111,9 @@ public class BusinessResAction extends commonAction {
      */
     @ApiOperation(value = "集团商城子业务菜单修改")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "子业务菜单Id", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "id", value = "子业务菜单Id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -140,7 +139,7 @@ public class BusinessResAction extends commonAction {
      */
     @ApiOperation(value = "根据父业务菜单id查询子业务菜单")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pid", value = "父业务菜单Id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "pid", value = "父业务菜单Id", dataType = "int", paramType = "query", required = true),
     })
     @RequestMapping(value = "/listByPid", method = RequestMethod.POST)
     public void listByPid(HttpServletResponse resp, HttpServletRequest req) throws Exception {

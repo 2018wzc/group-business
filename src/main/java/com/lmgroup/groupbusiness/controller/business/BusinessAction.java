@@ -56,9 +56,9 @@ public class BusinessAction extends commonAction {
      */
     @ApiOperation(value = "集团商城父业务菜单查询-分页查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageSize", value = "页面大小", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "currentPage", value = "当前第几页", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "页面大小", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "currentPage", value = "当前第几页", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/listInfo", method = RequestMethod.POST)
@@ -81,9 +81,8 @@ public class BusinessAction extends commonAction {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "父业务菜单名称", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "englishName", value = "父业务菜单英文名称(大写)", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -106,8 +105,8 @@ public class BusinessAction extends commonAction {
      */
     @ApiOperation(value = "集团商城父业务菜单详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "父业务菜单Id", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "id", value = "父业务菜单Id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/data", method = RequestMethod.POST)
@@ -129,9 +128,9 @@ public class BusinessAction extends commonAction {
      */
     @ApiOperation(value = "集团商城父业务菜单修改")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "父业务菜单Id", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "id", value = "父业务菜单Id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/update", method = RequestMethod.POST)
