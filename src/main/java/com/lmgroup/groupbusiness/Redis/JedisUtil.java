@@ -108,7 +108,8 @@ public class JedisUtil {
             } catch (Exception e) {
                 logger.error("get redis master1 failed!", e);
                 // 销毁对象
-                getPool(ip,port).returnBrokenResource(jedis);
+               // getPool(ip,port).returnBrokenResource(jedis);
+                jedis.close();
             }
             count++;
         }while(jedis==null&&count<retryTims);
@@ -119,9 +120,10 @@ public class JedisUtil {
      * 释放redis实例到连接池.
      * @param jedis redis实例
      */
-    public void closeJedis(Jedis jedis,String ip,int port) {
+    public void closeJedis(Jedis jedis) {
         if(jedis != null) {
-            getPool(ip,port).returnBrokenResource(jedis);
+           // getPool(ip,port).returnBrokenResource(jedis);
+            jedis.close();
         }
     }
 

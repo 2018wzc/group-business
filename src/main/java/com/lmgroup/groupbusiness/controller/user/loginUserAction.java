@@ -80,7 +80,7 @@ public class loginUserAction extends commonAction {
         // 设置key的有效期，并存储数据
         jedis.setex(adminid + "", 1800, tokenid);
         System.out.println(jedis.get(adminid + ""));
-        //  closeJedis(jedis);
+        closeJedis(jedis);
         SysLoginVO sysLogin = new SysLoginVO();
         sysLogin.setAdminId(adminid);
         sysLogin.setTokenId(tokenid);
