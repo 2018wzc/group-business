@@ -1,9 +1,12 @@
 package com.lmgroup.groupbusiness.controller.business;
 
+import com.lmgroup.groupbusiness.domain.user.LoginUserVO;
+import com.lmgroup.groupbusiness.service.LoginUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +23,10 @@ import com.lmgroup.groupbusiness.utils.commonAction;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
+
+import static com.lmgroup.groupbusiness.utils.FormatDate.DateFormatStamp;
 
 @RestController
 @RequestMapping("/business")
@@ -30,7 +36,8 @@ public class BusinessAction extends commonAction {
 
     @Autowired
     private BussinessService bussinessService;
-
+    @Autowired
+    private LoginUserService userService;
 
     /**
      * 查询集团商城父业务菜单
@@ -83,6 +90,7 @@ public class BusinessAction extends commonAction {
             @ApiImplicitParam(name = "englishName", value = "父业务菜单英文名称(大写)", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "reorder", value = "优先级", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "path", value = "页面路径指向('\\'+小写英文名称)", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "Integer", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
@@ -94,7 +102,26 @@ public class BusinessAction extends commonAction {
         int state = Integer.parseInt(req.getParameter("state"));
         int reorder = Integer.parseInt(req.getParameter("reorder"));
         int adminId = Integer.parseInt(req.getParameter("adminId"));
-        bussinessService.add(name, englishName, state, adminId,reorder);
+        String path = req.getParameter("path");
+        if (StringUtils.isBlank(name) || StringUtils.isBlank(englishName) || StringUtils.isBlank(path)) {
+            throw new ParamException("参数错误");
+        }
+        if (state < 1 || adminId < 1 || reorder < 1) {
+            throw new ParamException("参数错误");
+        }
+        LoginUserVO userVO = userService.selectById(adminId);
+        if (userVO == null) {
+            throw new ParamException("操作人账号不存在");
+        }
+        BussinessVO bussiness = new BussinessVO();
+        bussiness.setName(name);
+        bussiness.setEnglisName(englishName);
+        bussiness.setPath(path);
+        bussiness.setReorder(reorder);
+        bussiness.setCreator(userVO.getUserAccount());
+        bussiness.setCreatTime(DateFormatStamp(new Date()));
+        bussiness.setState(state);
+        bussinessService.add(bussiness);
         sendResult(resp, null);
     }
 

@@ -32,14 +32,14 @@ public class BusinessDesServiceImpl implements BusinessDesService {
         if (currentPage < 0) {
             throw new ParamException("参数错误");
         }
-        HashMap hashMap=new HashMap();
-        hashMap.put("pageSize",pageSize);
-        hashMap.put("currentPage",currentPage);
+        HashMap hashMap = new HashMap();
+        hashMap.put("pageSize", pageSize);
+        hashMap.put("currentPage", currentPage);
         return businessDesDao.listInfo(hashMap);
     }
 
     public void add(BusinessDesVO businessDes) throws Exception {
-         businessDesDao.addBusiness(businessDes);
+        businessDesDao.addBusiness(businessDes);
     }
 
     public BusinessDesVO data(int id) throws Exception {
@@ -48,7 +48,7 @@ public class BusinessDesServiceImpl implements BusinessDesService {
 
 
     public void update(BusinessDesVO businessDes) throws Exception {
-         businessDesDao.updateInfo(businessDes);
+        businessDesDao.updateInfo(businessDes);
     }
 
 
@@ -56,8 +56,20 @@ public class BusinessDesServiceImpl implements BusinessDesService {
         return businessDesDao.queryByPid(pid);
     }
 
-    public List<BusinessDesVO> queryByType(int typeId) throws Exception {
-        return businessDesDao.queryByType(typeId);
+    public List<BusinessDesVO> queryByType(int pageSize, int currentPage, int typeId) throws Exception {
+        if (typeId < 1) {
+            throw new ParamException("参数错误");
+        }
+        if (pageSize < 0) {
+            pageSize = 10;
+        }
+        if (currentPage < 0) {
+            throw new ParamException("参数错误");
+        }
+        HashMap hashMap = new HashMap();
+        hashMap.put("pageSize", pageSize);
+        hashMap.put("currentPage", currentPage);
+        return businessDesDao.queryByType(hashMap);
     }
 
 }

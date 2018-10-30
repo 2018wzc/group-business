@@ -50,5 +50,5 @@ public interface BusinessDesService {
      * @param
      * @return
      */
-    List<BusinessDesVO> queryByType(int typeId) throws Exception;
+    List<BusinessDesVO> queryByType(int pageSize,int currentPage,int typeId) throws Exception;
 }

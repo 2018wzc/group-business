@@ -34,11 +34,11 @@
         from business_des
         where pid = #{pid,jdbcType=INTEGER} and state=1
     </select>
-    <select id="queryByType" resultMap="BusinessDes" parameterType="java.lang.Integer">
+    <select id="queryByType" resultMap="BusinessDes" parameterType="hashmap">
         select
         <include refid="Base_Column_List"/>
         from business_des
-        where typeid = #{typeId,jdbcType=INTEGER} and state=1
+        where pid = #{typeId,jdbcType=INTEGER} and state=1 LIMIT #{currentPage},#{pageSize}
     </select>
     <insert id="addBusiness" parameterType="com.lmgroup.groupbusiness.domain.business.BusinessDesVO">
         INSERT INTO business_des(pid,image,content,typeid,title,describ,creator,creat_time,state) VALUES(#{pid},#{image},#{content},#{typeId},#{title},#{describ},#{creator},#{creatTime},#{state})

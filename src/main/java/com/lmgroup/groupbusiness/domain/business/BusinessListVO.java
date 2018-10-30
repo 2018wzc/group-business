@@ -18,6 +18,8 @@ public class BusinessListVO {
 
     private int reorder;//菜单显示优先级
 
+    private String path;//页面路径指向
+
     private List<BusinessResVO> businessResVO;
 
     public List<BusinessResVO> getBusinessResVO() {
@@ -52,12 +54,19 @@ public class BusinessListVO {
         this.englisName = englisName;
     }
 
-
     public int getReorder() {
         return reorder;
     }
 
     public void setReorder(int reorder) {
         this.reorder = reorder;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

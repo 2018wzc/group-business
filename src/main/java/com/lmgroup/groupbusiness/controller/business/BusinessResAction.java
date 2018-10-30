@@ -1,25 +1,19 @@
 package com.lmgroup.groupbusiness.controller.business;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import com.lmgroup.groupbusiness.domain.business.BusinessResVO;
 import com.lmgroup.groupbusiness.security.PermissionConstants;
 import com.lmgroup.groupbusiness.security.RequiredPermission;
 import com.lmgroup.groupbusiness.service.BusinessResService;
 import com.lmgroup.groupbusiness.utils.ParamException;
 import com.lmgroup.groupbusiness.utils.commonAction;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/businessRes")

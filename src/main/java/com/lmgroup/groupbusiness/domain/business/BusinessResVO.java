@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 /**
  * 集团商城子业务菜单类
+ *
  * @author wangzichun
  */
 public class BusinessResVO {
@@ -19,6 +20,13 @@ public class BusinessResVO {
     private Timestamp creatTime;//创建时间
 
     private String creator;//创建人
+
+    private String title;//标题
+
+    private String bgImg;//背景图片
+
+    private String coiImg;//标识图片
+
 
     public int getId() {
         return id;
@@ -66,5 +74,29 @@ public class BusinessResVO {
 
     public void setCreator(String creator) {
         this.creator = creator;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBgImg() {
+        return bgImg;
+    }
+
+    public void setBgImg(String bgImg) {
+        this.bgImg = bgImg;
+    }
+
+    public String getCoiImg() {
+        return coiImg;
+    }
+
+    public void setCoiImg(String coiImg) {
+        this.coiImg = coiImg;
     }
 }

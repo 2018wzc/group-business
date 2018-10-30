@@ -23,6 +23,8 @@ public class BussinessVO {
 
     private int reorder;//菜单显示优先级
 
+    private String path;//页面路径指向
+
     public int getId() {
         return id;
     }
@@ -77,5 +79,13 @@ public class BussinessVO {
 
     public void setReorder(int reorder) {
         this.reorder = reorder;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

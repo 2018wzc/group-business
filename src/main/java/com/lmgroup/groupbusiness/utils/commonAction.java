@@ -33,7 +33,7 @@ public class commonAction {
             gson = new Gson();
             resp.setCharacterEncoding("UTF-8");
             rs.setSuccess(true);
-            rs.setCode(1);
+            rs.setCode(200);
             if (data != null) {
                 rs.setData(data);
             }
@@ -61,7 +61,7 @@ public class commonAction {
         gson = new Gson();
         ResponseResult rs = new ResponseResult();
         resp.setCharacterEncoding("UTF-8");
-        rs.setCode(1);
+        rs.setCode(200);
         rs.setSuccess(true);
         if (data != null) {
             rs.setData(data);

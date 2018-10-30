@@ -9,9 +9,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.lmgroup.groupbusiness.domain.business.BusinessDesVO;
 import com.lmgroup.groupbusiness.domain.user.LoginUserVO;
@@ -74,7 +74,7 @@ public class BusinessDesAction extends commonAction {
      */
     @ApiOperation(value = "集团商城业务新增(swargger不支持多文件数据类型,导致该接口此处无法测试,请在postman测试该接口)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "image", value = "多个图片文件", dataType = "files", paramType = "multipart/form-data", required = true),
+            @ApiImplicitParam(name = "image", value = "图片文件", dataType = "files", paramType = "multipart/form-data", required = false),
             @ApiImplicitParam(name = "pid", value = "子业务菜单id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "describ", value = "描述", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "content", value = "内容", dataType = "String", paramType = "query", required = true),
@@ -87,10 +87,8 @@ public class BusinessDesAction extends commonAction {
     })
     @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "multipart/form-data")
     @RequiredPermission(PermissionConstants.NOLOGIN)
-    public void add(HttpServletResponse resp, HttpServletRequest req) throws Exception {
-        List<MultipartFile> files = ((MultipartHttpServletRequest) req).getFiles("image");
+    public void add(HttpServletResponse resp, HttpServletRequest req, @RequestParam("image") MultipartFile file) throws Exception {
         int pid = Integer.parseInt(req.getParameter("pid"));
-        String image = "";
         String describ = req.getParameter("describ");
         String content = req.getParameter("content");
         int typeId = Integer.parseInt(req.getParameter("typeId"));
@@ -108,18 +106,14 @@ public class BusinessDesAction extends commonAction {
         if (userVO == null) {
             throw new ParamException("操作用户不存在");
         }
-        if (files == null || files.size() < 0) {
-            throw new ParamException("参数错误");
-        }
-        for (int i = 0; i < files.size(); i++) {
-            MultipartFile file = files.get(i);
-            image += upLoadFile(file) + ";";
-        }
         BusinessDesVO businessDesVO = new BusinessDesVO();
+        if (!file.isEmpty()) {
+            String image = upLoadFile(file);
+            businessDesVO.setImage(image);
+        }
         businessDesVO.setPid(pid);
         businessDesVO.setState(state);
         businessDesVO.setContent(content);
-        businessDesVO.setImage(image);
         businessDesVO.setTitle(title);
         businessDesVO.setDescrib(describ);
         businessDesVO.setTypeId(typeId);
@@ -189,17 +183,18 @@ public class BusinessDesAction extends commonAction {
      * @param
      * @return
      */
-    @ApiOperation(value = "根据业务类型查询集团商城业务")
+    @ApiOperation(value = "根据业务类型查询集团商城业务-分页查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "typeId", value = "业务类型Id(对应父业务菜单Id)", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "typeId", value = "业务类型Id(对应子业务菜单Id)", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "页面大小", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "currentPage", value = "当前第几页", dataType = "int", paramType = "query", required = true),
     })
     @RequestMapping(value = "/listByType", method = RequestMethod.POST)
     public void listByType(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int typeId = Integer.parseInt(req.getParameter("typeId"));
-        if (typeId < 1) {
-            throw new ParamException("参数错误");
-        }
-        List<BusinessDesVO> list = businessDesService.queryByPid(typeId);
+        int pageSize = Integer.parseInt(req.getParameter("pageSize"));
+        int currentPage = Integer.parseInt(req.getParameter("currentPage"));
+        List<BusinessDesVO> list = businessDesService.queryByType(pageSize,currentPage,typeId);
         int count = list.size();
         sendPageResult(resp, list, count);
     }
@@ -223,6 +218,17 @@ public class BusinessDesAction extends commonAction {
         List<BusinessDesVO> list = businessDesService.queryByPid(pid);
         int count = list.size();
         sendPageResult(resp, list, count);
+    }
+
+    @ApiOperation(value = "图片上传接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "imgFile", value = "单个图片文件", dataType = "files", paramType = "multipart/form-data", required = true),
+    })
+    @RequestMapping(value = "/upLoadImg", method = RequestMethod.POST)
+    @RequiredPermission(PermissionConstants.NOLOGIN)
+    public void upLoadImg(HttpServletResponse resp, HttpServletRequest req, @RequestParam("imgFile") MultipartFile file) throws Exception {
+        String imgPath = upLoadFile(file);
+        sendResult(resp, imgPath);
     }
 
 }

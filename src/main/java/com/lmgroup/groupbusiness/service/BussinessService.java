@@ -17,10 +17,10 @@ public interface BussinessService {
     /**
      * 新增集团商城父业务菜单
      *
-     * @param
+     * @param bussiness
      * @return
      */
-    void add(String name,String englishName,int state,int adminId,int reorder) throws Exception;
+    void add(BussinessVO bussiness) throws Exception;
 
     /**
      * 集团商城父业务菜单详情

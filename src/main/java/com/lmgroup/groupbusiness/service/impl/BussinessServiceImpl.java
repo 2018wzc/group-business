@@ -51,7 +51,7 @@ public class BussinessServiceImpl implements BussinessService {
         List<BussinessVO> list = bussinessDao.list();
         for (int i = 0; i < list.size(); i++) {
             BusinessListVO listVO = new BusinessListVO();
-            BussinessVO bussiness=list.get(i);
+            BussinessVO bussiness = list.get(i);
             int id = bussiness.getId();
             List<BusinessResVO> reslist = businessResDao.queryByPid(id);
             if (reslist != null) {
@@ -61,29 +61,13 @@ public class BussinessServiceImpl implements BussinessService {
             listVO.setName(bussiness.getName());
             listVO.setEnglisName(bussiness.getEnglisName());
             listVO.setReorder(bussiness.getReorder());
+            listVO.setPath(bussiness.getPath());
             businessListVOS.add(listVO);
         }
         return businessListVOS;
     }
 
-    public void add(String name, String englishName, int state, int adminId, int reorder) throws Exception {
-        if (StringUtils.isBlank(name) || StringUtils.isBlank(englishName)) {
-            throw new ParamException("参数错误");
-        }
-        if (state < 1 || adminId < 1 || reorder < 1) {
-            throw new ParamException("参数错误");
-        }
-        BussinessVO bussiness = new BussinessVO();
-        bussiness.setName(name);
-        bussiness.setEnglisName(englishName);
-        bussiness.setReorder(reorder);
-        LoginUserVO userVO = loginUserDao.selectById(adminId);
-        if (userVO == null) {
-            throw new ParamException("操作人账号不存在");
-        }
-        bussiness.setCreator(userVO.getUserAccount());
-        bussiness.setCreatTime(DateFormatStamp(new Date()));
-        bussiness.setState(state);
+    public void add(BussinessVO bussiness) throws Exception {
         bussinessDao.addBusiness(bussiness);
     }
 
