@@ -90,7 +90,7 @@ public class BusinessAction extends commonAction {
             @ApiImplicitParam(name = "englishName", value = "父业务菜单英文名称(大写)", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "reorder", value = "优先级", dataType = "int", paramType = "query", required = true),
-            @ApiImplicitParam(name = "path", value = "页面路径指向('\\'+小写英文名称)", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "path", value = "页面路径指向('/'+小写英文名称+'/')", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "Integer", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
