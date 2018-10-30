@@ -22,7 +22,7 @@ public class BusinessDesVO {
 
     private int typeId;//业务类型id,1集团要闻,2业务动态,3媒体资讯,4其他
 
-    private String title;//子业务名称
+    private String title;//业务名称
 
     private Timestamp creatTime;//创建时间
 

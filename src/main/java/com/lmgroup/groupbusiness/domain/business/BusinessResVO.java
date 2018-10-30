@@ -21,12 +21,6 @@ public class BusinessResVO {
 
     private String creator;//创建人
 
-    private String title;//标题
-
-    private String bgImg;//背景图片
-
-    private String coiImg;//标识图片
-
 
     public int getId() {
         return id;
@@ -76,27 +70,5 @@ public class BusinessResVO {
         this.creator = creator;
     }
 
-    public String getTitle() {
-        return title;
-    }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getBgImg() {
-        return bgImg;
-    }
-
-    public void setBgImg(String bgImg) {
-        this.bgImg = bgImg;
-    }
-
-    public String getCoiImg() {
-        return coiImg;
-    }
-
-    public void setCoiImg(String coiImg) {
-        this.coiImg = coiImg;
-    }
 }
