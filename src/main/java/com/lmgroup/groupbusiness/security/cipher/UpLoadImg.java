@@ -57,4 +57,13 @@ public class UpLoadImg {
         }
         return result;
     }
+
+    public static void delImage(String imageName)throws Exception{
+        //创建OSSClient实例
+        OSSClient ossClient=new OSSClient(endpoint,accessKeyId,accessKeySecret);
+        //删除文件
+        ossClient.deleteObject(bucketName,imageName);
+        //关闭OSSClient
+        ossClient.shutdown();
+    }
 }
