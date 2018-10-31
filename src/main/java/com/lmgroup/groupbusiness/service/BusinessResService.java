@@ -42,4 +42,12 @@ public interface BusinessResService {
      * @return
      */
     List<BusinessResVO> queryByPid(int pid) throws Exception;
+
+    /**
+     * 查询总条数
+     * @param pid
+     * @return
+     * @throws Exception
+     */
+    public int selectCount(int pid) throws Exception;
 }

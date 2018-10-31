@@ -44,7 +44,7 @@ public class BusinessResAction extends commonAction {
         int pageSize = Integer.parseInt(req.getParameter("pageSize"));
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         List<BusinessResVO> list = businessResService.list(pageSize, currentPage);
-        int count = list.size();
+        int count = businessResService.selectCount(0);
         sendPageResult(resp, list, count);
     }
 
@@ -142,7 +142,8 @@ public class BusinessResAction extends commonAction {
             throw new ParamException("参数错误");
         }
         List<BusinessResVO> list = businessResService.queryByPid(pid);
-        int count = list.size();
+     //   int count = businessResService.selectCount(pid);
+        int count=list.size();
         sendPageResult(resp, list, count);
     }
 

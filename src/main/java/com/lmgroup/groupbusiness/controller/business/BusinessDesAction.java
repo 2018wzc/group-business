@@ -62,7 +62,7 @@ public class BusinessDesAction extends commonAction {
         int pageSize = Integer.parseInt(req.getParameter("pageSize"));
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         List<BusinessDesVO> list = businessDesService.list(pageSize, currentPage);
-        int count = list.size();
+        int count = businessDesService.selectCount(0);
         sendPageResult(resp, list, count);
     }
 
@@ -135,11 +135,9 @@ public class BusinessDesAction extends commonAction {
     @ApiOperation(value = "集团商城业务详情")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "业务Id", dataType = "int", paramType = "query", required = true),
-            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
-            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/data", method = RequestMethod.POST)
-    @RequiredPermission(PermissionConstants.NOLOGIN)
+    //@RequiredPermission(PermissionConstants.NOLOGIN)
     public void data(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int id = Integer.parseInt(req.getParameter("id"));
         if (id < 1) {
@@ -195,7 +193,7 @@ public class BusinessDesAction extends commonAction {
         int pageSize = Integer.parseInt(req.getParameter("pageSize"));
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         List<BusinessDesVO> list = businessDesService.queryByType(pageSize,currentPage,typeId);
-        int count = list.size();
+        int count = businessDesService.selectCount(typeId);
         sendPageResult(resp, list, count);
     }
 

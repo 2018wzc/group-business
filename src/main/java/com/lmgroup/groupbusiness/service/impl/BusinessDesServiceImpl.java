@@ -69,8 +69,16 @@ public class BusinessDesServiceImpl implements BusinessDesService {
         HashMap hashMap = new HashMap();
         hashMap.put("pageSize", pageSize);
         hashMap.put("currentPage", currentPage);
-        hashMap.put("typeId",typeId);
+        hashMap.put("typeId", typeId);
         return businessDesDao.queryByType(hashMap);
+    }
+
+    public int selectCount(int typeId) throws Exception {
+        HashMap hashMap = new HashMap();
+        if (typeId > 0) {
+            hashMap.put("typeId", typeId);
+        }
+        return businessDesDao.selectCount(hashMap);
     }
 
 }

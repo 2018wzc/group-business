@@ -21,4 +21,6 @@ public interface BusinessDesDao {
     List<BusinessDesVO> queryByPid(int pid);
 
     List<BusinessDesVO> queryByType(HashMap hashMap);
+
+    int selectCount(HashMap hashMap);
 }

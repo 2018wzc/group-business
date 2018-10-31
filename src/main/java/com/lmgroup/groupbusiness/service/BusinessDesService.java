@@ -51,4 +51,12 @@ public interface BusinessDesService {
      * @return
      */
     List<BusinessDesVO> queryByType(int pageSize,int currentPage,int typeId) throws Exception;
+
+    /**
+     * 获取当前总数
+     * @param typeId
+     * @return
+     * @throws Exception
+     */
+    int selectCount(int typeId) throws Exception;
 }

@@ -21,6 +21,15 @@
         <include refid="Base_Column_List"/>
         from business_des LIMIT #{currentPage},#{pageSize}
     </select>
+    <select id="selectCount" resultType="int" parameterType="hashmap">
+        select
+        count(*)
+        from business_des
+        <where>
+            <if test="typeId!=null">pid=#{typeId}</if>
+        </where>
+    </select>
+
     <select id="dataInfo" resultMap="BusinessDes" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>

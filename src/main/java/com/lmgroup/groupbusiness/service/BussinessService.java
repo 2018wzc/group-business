@@ -38,5 +38,10 @@ public interface BussinessService {
      */
     void update(BussinessVO bussiness) throws Exception;
 
-
+    /**
+     * 查询总条数
+     * @return
+     * @throws Exception
+     */
+    public int selectCount() throws Exception;
 }

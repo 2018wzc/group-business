@@ -78,4 +78,8 @@ public class BussinessServiceImpl implements BussinessService {
     public void update(BussinessVO bussiness) throws Exception {
         bussinessDao.updateBusiness(bussiness);
     }
+
+    public int selectCount() throws Exception {
+        return bussinessDao.selectCount();
+    }
 }

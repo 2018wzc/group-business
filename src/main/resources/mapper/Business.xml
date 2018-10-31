@@ -48,5 +48,9 @@
         </set>
         where id=#{id}
     </update>
-
+    <select id="selectCount" resultType="int" parameterType="java.lang.Integer">
+        select
+        count(*)
+        from BUSINESS
+    </select>
 </mapper>

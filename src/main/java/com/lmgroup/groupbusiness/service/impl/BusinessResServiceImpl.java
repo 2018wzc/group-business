@@ -33,25 +33,25 @@ public class BusinessResServiceImpl implements BusinessResService {
         if (currentPage < 0) {
             throw new ParamException("参数错误");
         }
-        HashMap hashMap=new HashMap();
-        hashMap.put("pageSize",pageSize);
-        hashMap.put("currentPage",currentPage);
+        HashMap hashMap = new HashMap();
+        hashMap.put("pageSize", pageSize);
+        hashMap.put("currentPage", currentPage);
         return businessResDao.listInfo(hashMap);
     }
 
 
-    public void add(String name,int pid,int state,int adminId) throws Exception {
-        if(StringUtils.isBlank(name)){
+    public void add(String name, int pid, int state, int adminId) throws Exception {
+        if (StringUtils.isBlank(name)) {
             throw new ParamException("参数错误");
         }
-        if(state<1||adminId<1||pid<1){
+        if (state < 1 || adminId < 1 || pid < 1) {
             throw new ParamException("参数错误");
         }
-        BusinessResVO businessRes=new BusinessResVO();
+        BusinessResVO businessRes = new BusinessResVO();
         businessRes.setName(name);
         businessRes.setPid(pid);
-        LoginUserVO userVO=loginUserDao.selectById(adminId);
-        if(userVO==null){
+        LoginUserVO userVO = loginUserDao.selectById(adminId);
+        if (userVO == null) {
             throw new ParamException("操作人账号不存在");
         }
         businessRes.setCreator(userVO.getUserAccount());
@@ -73,5 +73,13 @@ public class BusinessResServiceImpl implements BusinessResService {
 
     public List<BusinessResVO> queryByPid(int pid) throws Exception {
         return businessResDao.queryByPid(pid);
+    }
+
+    public int selectCount(int pid) throws Exception {
+        HashMap hashMap = new HashMap();
+        if(pid>0){
+            hashMap.put("pid", pid);
+        }
+        return businessResDao.selectCount(hashMap);
     }
 }

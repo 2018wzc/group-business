@@ -20,4 +20,6 @@ public interface BussinessDao {
     BussinessVO dataInfo(int id);
 
     void updateBusiness(BussinessVO bussiness);
+
+    int selectCount();
 }

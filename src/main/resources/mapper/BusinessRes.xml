@@ -48,5 +48,9 @@
         </set>
         where id=#{id}
     </update>
-
+    <select id="selectCount" resultType="int" parameterType="hashmap">
+        select
+        count(*)
+        from business_res <where>  <if test="pid!=null"> pid=#{pid}</if></where>
+    </select>
 </mapper>

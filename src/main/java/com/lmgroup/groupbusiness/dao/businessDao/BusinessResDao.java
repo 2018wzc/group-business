@@ -19,4 +19,6 @@ public interface BusinessResDao {
     void updateInfo(BusinessResVO bussinessVO);
 
     List<BusinessResVO> queryByPid(int pid);
+
+    int selectCount(HashMap hashMap);
 }

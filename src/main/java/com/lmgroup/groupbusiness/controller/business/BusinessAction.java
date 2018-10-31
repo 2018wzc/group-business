@@ -74,7 +74,7 @@ public class BusinessAction extends commonAction {
         int pageSize = Integer.parseInt(req.getParameter("pageSize"));
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         List<BussinessVO> list = bussinessService.listInfo(pageSize, currentPage);
-        int count = list.size();
+        int count = bussinessService.selectCount();
         sendPageResult(resp, list, count);
     }
 
