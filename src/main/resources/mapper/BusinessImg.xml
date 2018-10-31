@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lmgroup.groupbusiness.dao.businessDao.BusinessImgDao">
+    <resultMap id="BusinessImg" type="com.lmgroup.groupbusiness.domain.business.BusinessImgVO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, title, image,state
+    </sql>
+    <select id="listInfo" resultMap="BusinessImg" parameterType="hashmap">
+        select
+        <include refid="Base_Column_List"/>
+        from business_img LIMIT #{currentPage},#{pageSize}
+    </select>
+    <select id="list" resultMap="BusinessImg" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from business_img where state=1
+    </select>
+    <select id="date" resultMap="BusinessImg" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from business_img
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <insert id="add" parameterType="com.lmgroup.groupbusiness.domain.business.BusinessImgVO">
+        INSERT INTO business_img(title,image,state) VALUES(#{title},#{image},#{state})
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from business_img where id = #{id}
+    </delete>
+    <select id="queryCount" resultType="int">
+        select count(*) from business_img;
+    </select>
+
+    <update id="update" parameterType="com.lmgroup.groupbusiness.domain.business.BusinessImgVO">
+        update business_img
+        <set>
+            <if test="title!=null">
+                title=#{title},
+            </if>
+            <if test="state!=null">
+                state=#{state},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+</mapper>

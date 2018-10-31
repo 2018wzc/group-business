@@ -32,6 +32,7 @@ public class BussinessServiceImpl implements BussinessService {
     @Resource
     private BusinessResDao businessResDao;
 
+    @Override
     /* @Cacheable(value = "thisredis", key = "'yyt_'+#id")*/
     public List<BussinessVO> listInfo(int pageSize, int currentPage) throws Exception {
         if (pageSize < 0) {
@@ -46,6 +47,7 @@ public class BussinessServiceImpl implements BussinessService {
         return bussinessDao.listInfo(hashMap);
     }
 
+    @Override
     public List<BusinessListVO> list() throws Exception {
         List<BusinessListVO> businessListVOS = new ArrayList<BusinessListVO>();
         List<BussinessVO> list = bussinessDao.list();
@@ -67,18 +69,22 @@ public class BussinessServiceImpl implements BussinessService {
         return businessListVOS;
     }
 
+    @Override
     public void add(BussinessVO bussiness) throws Exception {
         bussinessDao.addBusiness(bussiness);
     }
 
+    @Override
     public BussinessVO data(int id) throws Exception {
         return bussinessDao.dataInfo(id);
     }
 
+    @Override
     public void update(BussinessVO bussiness) throws Exception {
         bussinessDao.updateBusiness(bussiness);
     }
 
+    @Override
     public int selectCount() throws Exception {
         return bussinessDao.selectCount();
     }

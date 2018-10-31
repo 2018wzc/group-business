@@ -23,4 +23,6 @@ public interface BusinessDesDao {
     List<BusinessDesVO> queryByType(HashMap hashMap);
 
     int selectCount(HashMap hashMap);
+
+    void delete(int id);
 }

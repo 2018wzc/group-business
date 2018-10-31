@@ -142,7 +142,6 @@ public class BusinessResAction extends commonAction {
             throw new ParamException("参数错误");
         }
         List<BusinessResVO> list = businessResService.queryByPid(pid);
-     //   int count = businessResService.selectCount(pid);
         int count=list.size();
         sendPageResult(resp, list, count);
     }

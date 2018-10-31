@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.lmgroup.groupbusiness.security.cipher.UpLoadImg.delImage;
+
 @Service
 public class BusinessDesServiceImpl implements BusinessDesService {
 
@@ -25,6 +27,7 @@ public class BusinessDesServiceImpl implements BusinessDesService {
     @Resource
     private LoginUserDao loginUserDao;
 
+    @Override
     public List<BusinessDesVO> list(int pageSize, int currentPage) throws Exception {
         if (pageSize < 0) {
             pageSize = 10;
@@ -38,24 +41,27 @@ public class BusinessDesServiceImpl implements BusinessDesService {
         return businessDesDao.listInfo(hashMap);
     }
 
+    @Override
     public void add(BusinessDesVO businessDes) throws Exception {
         businessDesDao.addBusiness(businessDes);
     }
 
+    @Override
     public BusinessDesVO data(int id) throws Exception {
         return businessDesDao.dataInfo(id);
     }
 
-
+    @Override
     public void update(BusinessDesVO businessDes) throws Exception {
         businessDesDao.updateInfo(businessDes);
     }
 
-
+    @Override
     public List<BusinessDesVO> queryByPid(int pid) throws Exception {
         return businessDesDao.queryByPid(pid);
     }
 
+    @Override
     public List<BusinessDesVO> queryByType(int pageSize, int currentPage, int typeId) throws Exception {
         if (typeId < 1) {
             throw new ParamException("参数错误");
@@ -73,12 +79,28 @@ public class BusinessDesServiceImpl implements BusinessDesService {
         return businessDesDao.queryByType(hashMap);
     }
 
+    @Override
     public int selectCount(int typeId) throws Exception {
         HashMap hashMap = new HashMap();
         if (typeId > 0) {
             hashMap.put("typeId", typeId);
         }
         return businessDesDao.selectCount(hashMap);
+    }
+
+    @Override
+    public void delete(int id) throws Exception {
+        BusinessDesVO businessDesVO = businessDesDao.dataInfo(id);
+        String imgName = businessDesVO.getImage();
+        int state = businessDesVO.getState();
+        if (state != 2) {
+            throw new ParamException("该图片非禁用状态不能删除");
+        }
+        if (StringUtils.isNotBlank(imgName)) {
+            String name = imgName.substring(imgName.lastIndexOf("/") + 1);
+            delImage(name);
+        }
+        businessDesDao.delete(id);
     }
 
 }

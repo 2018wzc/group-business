@@ -26,6 +26,7 @@ public class BusinessResServiceImpl implements BusinessResService {
     @Resource
     private LoginUserDao loginUserDao;
 
+    @Override
     public List<BusinessResVO> list(int pageSize, int currentPage) throws Exception {
         if (pageSize < 0) {
             pageSize = 10;
@@ -39,7 +40,7 @@ public class BusinessResServiceImpl implements BusinessResService {
         return businessResDao.listInfo(hashMap);
     }
 
-
+    @Override
     public void add(String name, int pid, int state, int adminId) throws Exception {
         if (StringUtils.isBlank(name)) {
             throw new ParamException("参数错误");
@@ -60,24 +61,25 @@ public class BusinessResServiceImpl implements BusinessResService {
         businessResDao.addBusiness(businessRes);
     }
 
-
+    @Override
     public BusinessResVO data(int id) throws Exception {
         return businessResDao.dataInfo(id);
     }
 
-
+    @Override
     public void update(BusinessResVO businessRes) throws Exception {
         businessResDao.updateInfo(businessRes);
     }
 
-
+    @Override
     public List<BusinessResVO> queryByPid(int pid) throws Exception {
         return businessResDao.queryByPid(pid);
     }
 
+    @Override
     public int selectCount(int pid) throws Exception {
         HashMap hashMap = new HashMap();
-        if(pid>0){
+        if (pid > 0) {
             hashMap.put("pid", pid);
         }
         return businessResDao.selectCount(hashMap);

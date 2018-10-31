@@ -13,6 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
 
 public class UpLoadImg {
@@ -34,8 +37,9 @@ public class UpLoadImg {
         //创建oss客户端
         OSS client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
         try {
-
-            String fileName = file.getOriginalFilename();
+            String name=file.getOriginalFilename();
+            String suffix = name.substring(name.lastIndexOf(".") + 0);
+            String fileName = getRandomFileName()+suffix;
             //创建上传Object的Metadate
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(in.available());//定义长度，设置为获取到流的长度
@@ -65,5 +69,17 @@ public class UpLoadImg {
         ossClient.deleteObject(bucketName,imageName);
         //关闭OSSClient
         ossClient.shutdown();
+    }
+
+    /**
+     * 随机生成文件名
+     * @return
+     */
+    public static String getRandomFileName() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        String str = simpleDateFormat.format(new Date());
+        Random random = new Random();
+        int rannum = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;// 获取5位随机数
+        return rannum + str;// 当前时间
     }
 }

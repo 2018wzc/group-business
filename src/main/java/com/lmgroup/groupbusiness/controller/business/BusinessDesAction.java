@@ -192,7 +192,7 @@ public class BusinessDesAction extends commonAction {
         int typeId = Integer.parseInt(req.getParameter("typeId"));
         int pageSize = Integer.parseInt(req.getParameter("pageSize"));
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
-        List<BusinessDesVO> list = businessDesService.queryByType(pageSize,currentPage,typeId);
+        List<BusinessDesVO> list = businessDesService.queryByType(pageSize, currentPage, typeId);
         int count = businessDesService.selectCount(typeId);
         sendPageResult(resp, list, count);
     }
@@ -227,6 +227,23 @@ public class BusinessDesAction extends commonAction {
     public void upLoadImg(HttpServletResponse resp, HttpServletRequest req, @RequestParam("imgFile") MultipartFile file) throws Exception {
         String imgPath = upLoadFile(file);
         sendResult(resp, imgPath);
+    }
+
+    @ApiOperation(value = "删除集团业务(只有被禁用的业务才可被删除)")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequiredPermission(PermissionConstants.NOLOGIN)
+    public void delete(HttpServletResponse resp, HttpServletRequest req) throws Exception {
+        int id = Integer.parseInt(req.getParameter("id"));
+        if (id < 1) {
+            throw new ParamException("参数错误");
+        }
+        businessDesService.delete(id);
+        sendResult(resp, null);
     }
 
 }
