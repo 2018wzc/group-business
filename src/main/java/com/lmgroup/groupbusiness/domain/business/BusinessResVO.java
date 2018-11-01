@@ -21,6 +21,7 @@ public class BusinessResVO {
 
     private String creator;//创建人
 
+    private int type;//1,功能按钮(默认),0层级菜单
 
     public int getId() {
         return id;
@@ -70,5 +71,11 @@ public class BusinessResVO {
         this.creator = creator;
     }
 
+    public int getType() {
+        return type;
+    }
 
+    public void setType(int type) {
+        this.type = type;
+    }
 }

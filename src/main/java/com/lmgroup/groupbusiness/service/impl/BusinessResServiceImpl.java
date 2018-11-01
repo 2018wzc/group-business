@@ -41,7 +41,7 @@ public class BusinessResServiceImpl implements BusinessResService {
     }
 
     @Override
-    public void add(String name, int pid, int state, int adminId) throws Exception {
+    public void add(String name, int pid, int state, int adminId, int type) throws Exception {
         if (StringUtils.isBlank(name)) {
             throw new ParamException("参数错误");
         }
@@ -50,6 +50,7 @@ public class BusinessResServiceImpl implements BusinessResService {
         }
         BusinessResVO businessRes = new BusinessResVO();
         businessRes.setName(name);
+        businessRes.setType(type);
         businessRes.setPid(pid);
         LoginUserVO userVO = loginUserDao.selectById(adminId);
         if (userVO == null) {

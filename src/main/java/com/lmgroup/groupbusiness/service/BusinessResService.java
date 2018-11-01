@@ -18,7 +18,7 @@ public interface BusinessResService {
      * @param
      * @return
      */
-    void add(String name,int pid,int state,int adminId) throws Exception;
+    void add(String name, int pid, int state, int adminId, int type) throws Exception;
 
     /**
      * 详情集团商城子业务菜单
@@ -38,6 +38,7 @@ public interface BusinessResService {
 
     /**
      * 根据父业务id查询子业务菜单
+     *
      * @param pid
      * @return
      */
@@ -45,6 +46,7 @@ public interface BusinessResService {
 
     /**
      * 查询总条数
+     *
      * @param pid
      * @return
      * @throws Exception

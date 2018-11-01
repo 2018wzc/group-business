@@ -59,6 +59,7 @@ public class BusinessResAction extends commonAction {
             @ApiImplicitParam(name = "name", value = "集团子业务菜单名称", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "pid", value = "父业务菜单id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "type", value = "1,功能按钮,0层级菜单", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
@@ -68,8 +69,9 @@ public class BusinessResAction extends commonAction {
         String name = req.getParameter("name");
         int pid = Integer.parseInt(req.getParameter("pid"));
         int state = Integer.parseInt(req.getParameter("state"));
+        int type = Integer.parseInt(req.getParameter("type"));
         int adminId = Integer.parseInt(req.getParameter("adminId"));
-        businessResService.add(name, pid, state, adminId);
+        businessResService.add(name, pid, state, adminId,type);
         sendResult(resp, null);
     }
 
@@ -107,6 +109,9 @@ public class BusinessResAction extends commonAction {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "子业务菜单Id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "name", value = "集团子业务菜单名称", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "pid", value = "父业务菜单id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "type", value = "1,功能按钮,0层级菜单", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
@@ -115,10 +120,16 @@ public class BusinessResAction extends commonAction {
     public void update(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int id = Integer.parseInt(req.getParameter("id"));
         int state = Integer.parseInt(req.getParameter("state"));
-        if (id < 1 || state < 1) {
+        String name = req.getParameter("name");
+        int pid = Integer.parseInt(req.getParameter("pid"));
+        int type = Integer.parseInt(req.getParameter("type"));
+        if (id < 1 || state < 1||pid<1) {
             throw new ParamException("参数错误");
         }
         BusinessResVO bussinessVO = new BusinessResVO();
+        bussinessVO.setName(name);
+        bussinessVO.setType(type);
+        bussinessVO.setPid(pid);
         bussinessVO.setId(id);
         bussinessVO.setState(state);
         businessResService.update(bussinessVO);

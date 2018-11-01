@@ -8,9 +8,10 @@
         <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP"/>
         <result column="creator" property="creator" jdbcType="VARCHAR"/>
         <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, res_name, pid,state,creator,creat_time
+        id, res_name, pid,state,creator,creat_time,type
     </sql>
     <select id="listInfo" resultMap="BusinessRes" parameterType="hashmap">
         select
@@ -31,9 +32,9 @@
     </select>
 
     <insert id="addBusiness" parameterType="com.lmgroup.groupbusiness.domain.business.BusinessResVO">
-        INSERT INTO business_res(res_name,pid,creator,creat_time,state) VALUES(#{name},#{pid},#{creator},#{creatTime},#{state})
+        INSERT INTO business_res(res_name,pid,creator,creat_time,state,type) VALUES(#{name},#{pid},#{creator},#{creatTime},#{state},#{type})
     </insert>
-    <update id="updateInfo"   parameterType="com.lmgroup.groupbusiness.domain.business.BusinessResVO">
+    <update id="updateInfo" parameterType="com.lmgroup.groupbusiness.domain.business.BusinessResVO">
         update business_res
         <set>
             <if test="name!=null">
@@ -45,12 +46,18 @@
             <if test="state!=null">
                 state=#{state},
             </if>
+            <if test="type!=null">
+                type=#{type},
+            </if>
         </set>
         where id=#{id}
     </update>
     <select id="selectCount" resultType="int" parameterType="hashmap">
         select
         count(*)
-        from business_res <where>  <if test="pid!=null"> pid=#{pid}</if></where>
+        from business_res
+        <where>
+            <if test="pid!=null">pid=#{pid}</if>
+        </where>
     </select>
 </mapper>
