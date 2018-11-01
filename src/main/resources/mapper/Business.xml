@@ -10,9 +10,10 @@
         <result column="state" property="state" jdbcType="INTEGER"/>
         <result column="reorder" property="reorder" jdbcType="INTEGER"/>
         <result column="path" property="path" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, bus_name, english_name,state,creat_time,reorder,path
+        id, bus_name, english_name,state,creat_time,reorder,path,type
     </sql>
     <select id="listInfo" resultMap="BaseResultMap" parameterType="hashmap">
         select
@@ -31,7 +32,7 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <insert id="addBusiness" parameterType="com.lmgroup.groupbusiness.domain.business.BussinessVO">
-        INSERT INTO BUSINESS(bus_name,english_name,creator,creat_time,state,reorder,path) VALUES(#{name},#{englisName},#{creator},#{creatTime},#{state},#{reorder},#{path})
+        INSERT INTO BUSINESS(bus_name,english_name,creator,creat_time,state,reorder,path,type) VALUES(#{name},#{englisName},#{creator},#{creatTime},#{state},#{reorder},#{path},#{type})
     </insert>
     <update id="updateBusiness" parameterType="com.lmgroup.groupbusiness.domain.business.BussinessVO">
         update BUSINESS
@@ -39,11 +40,20 @@
             <if test="name!=null">
                 bus_name=#{name},
             </if>
+            <if test="reorder!=null">
+                reorder=#{reorder},
+            </if>
             <if test="englisName!=null">
                 english_name=#{englisName},
             </if>
+            <if test="path!=null">
+                path=#{path},
+            </if>
             <if test="state!=null">
                 state=#{state},
+            </if>
+            <if test="type!=null">
+                type=#{type},
             </if>
         </set>
         where id=#{id}

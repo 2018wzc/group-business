@@ -90,6 +90,7 @@ public class BusinessAction extends commonAction {
             @ApiImplicitParam(name = "englishName", value = "父业务菜单英文名称(大写)", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "reorder", value = "优先级", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "type", value = "1,功能按钮,0层级菜单(默认)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "path", value = "页面路径指向('/'+小写英文名称+'/')", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "Integer", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
@@ -100,6 +101,7 @@ public class BusinessAction extends commonAction {
         String name = req.getParameter("name");
         String englishName = req.getParameter("englishName");
         int state = Integer.parseInt(req.getParameter("state"));
+        int type = Integer.parseInt(req.getParameter("type"));
         int reorder = Integer.parseInt(req.getParameter("reorder"));
         int adminId = Integer.parseInt(req.getParameter("adminId"));
         String path = req.getParameter("path");
@@ -114,6 +116,7 @@ public class BusinessAction extends commonAction {
             throw new ParamException("操作人账号不存在");
         }
         BussinessVO bussiness = new BussinessVO();
+        bussiness.setType(type);
         bussiness.setName(name);
         bussiness.setEnglisName(englishName);
         bussiness.setPath(path);
@@ -159,6 +162,11 @@ public class BusinessAction extends commonAction {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "父业务菜单Id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "name", value = "父业务菜单名称", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "englishName", value = "父业务菜单英文名称(大写)", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "reorder", value = "优先级", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "type", value = "1,功能按钮,0层级菜单(默认)", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "path", value = "页面路径指向('/'+小写英文名称+'/')", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
@@ -167,10 +175,20 @@ public class BusinessAction extends commonAction {
     public void update(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int id = Integer.parseInt(req.getParameter("id"));
         int state = Integer.parseInt(req.getParameter("state"));
+        String name = req.getParameter("name");
+        String englishName = req.getParameter("englishName");
+        int reorder = Integer.parseInt(req.getParameter("reorder"));
+        int type = Integer.parseInt(req.getParameter("type"));
+        String path = req.getParameter("path");
         if (id < 1 || state < 1) {
             throw new ParamException("参数错误");
         }
         BussinessVO bussinessVO = new BussinessVO();
+        bussinessVO.setReorder(reorder);
+        bussinessVO.setName(name);
+        bussinessVO.setEnglisName(englishName);
+        bussinessVO.setPath(path);
+        bussinessVO.setType(type);
         bussinessVO.setId(id);
         bussinessVO.setState(state);
         bussinessService.update(bussinessVO);

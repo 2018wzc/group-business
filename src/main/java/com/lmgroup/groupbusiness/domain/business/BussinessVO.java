@@ -25,6 +25,8 @@ public class BussinessVO {
 
     private String path;//页面路径指向
 
+    private int type;//1,功能按钮,0层级菜单(默认)
+
     public int getId() {
         return id;
     }
@@ -87,5 +89,13 @@ public class BussinessVO {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }
