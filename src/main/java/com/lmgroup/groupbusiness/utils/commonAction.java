@@ -27,11 +27,13 @@ public class commonAction {
      * @throws IOException
      */
     protected void sendResult(HttpServletResponse resp, Object data) throws IOException {
+
         rs = new ResponseResult();
         String result = "";
         try {
             gson = new Gson();
             resp.setCharacterEncoding("UTF-8");
+            resp.setHeader("Content-type", "text/html;charset=UTF-8");
             rs.setSuccess(true);
             rs.setCode(200);
             if (data != null) {
@@ -61,6 +63,7 @@ public class commonAction {
         gson = new Gson();
         ResponseResult rs = new ResponseResult();
         resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Content-type", "text/html;charset=UTF-8");
         rs.setCode(200);
         rs.setSuccess(true);
         if (data != null) {
@@ -83,6 +86,7 @@ public class commonAction {
     @ExceptionHandler
     protected String doExp(HttpServletRequest request, HttpServletResponse response, Exception ex) {
         response.setCharacterEncoding("UTF-8");
+        response.setHeader("Content-type", "text/html;charset=UTF-8");
         gson = new Gson();
         ex.printStackTrace();
         rs = new ResponseResult();
