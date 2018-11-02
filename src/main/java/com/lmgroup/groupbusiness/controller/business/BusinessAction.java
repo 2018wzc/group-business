@@ -87,7 +87,7 @@ public class BusinessAction extends commonAction {
     @ApiOperation(value = "集团商城父业务菜单新增")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "父业务菜单名称", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "englishName", value = "父业务菜单英文名称(大写)", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "englisName", value = "父业务菜单英文名称(大写)", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "reorder", value = "优先级", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "type", value = "1,功能按钮,0层级菜单(默认)", dataType = "int", paramType = "query", required = true),
@@ -99,7 +99,7 @@ public class BusinessAction extends commonAction {
     @RequiredPermission(PermissionConstants.NOLOGIN)
     public void add(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         String name = req.getParameter("name");
-        String englishName = req.getParameter("englishName");
+        String englishName = req.getParameter("englisName");
         int state = Integer.parseInt(req.getParameter("state"));
         int type = Integer.parseInt(req.getParameter("type"));
         int reorder = Integer.parseInt(req.getParameter("reorder"));
@@ -163,7 +163,7 @@ public class BusinessAction extends commonAction {
             @ApiImplicitParam(name = "id", value = "父业务菜单Id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "name", value = "父业务菜单名称", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "englishName", value = "父业务菜单英文名称(大写)", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "englisName", value = "父业务菜单英文名称(大写)", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "reorder", value = "优先级", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "type", value = "1,功能按钮,0层级菜单(默认)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "path", value = "页面路径指向('/'+小写英文名称+'/')", dataType = "String", paramType = "query", required = true),
@@ -176,7 +176,7 @@ public class BusinessAction extends commonAction {
         int id = Integer.parseInt(req.getParameter("id"));
         int state = Integer.parseInt(req.getParameter("state"));
         String name = req.getParameter("name");
-        String englishName = req.getParameter("englishName");
+        String englishName = req.getParameter("englisName");
         int reorder = Integer.parseInt(req.getParameter("reorder"));
         int type = Integer.parseInt(req.getParameter("type"));
         String path = req.getParameter("path");

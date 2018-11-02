@@ -14,7 +14,7 @@
         <result column="state" property="state" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, pid, image,content,typeid,title,describ,creat_time,creator,state
+        id, pid, image,content,title,describ,creat_time,creator,state
     </sql>
     <select id="listInfo" resultMap="BusinessDes" parameterType="hashmap">
         select
@@ -50,7 +50,7 @@
         where pid = #{typeId,jdbcType=INTEGER} and state=1 LIMIT #{currentPage},#{pageSize}
     </select>
     <insert id="addBusiness" parameterType="com.lmgroup.groupbusiness.domain.business.BusinessDesVO">
-        INSERT INTO business_des(pid,image,content,typeid,title,describ,creator,creat_time,state) VALUES(#{pid},#{image},#{content},#{typeId},#{title},#{describ},#{creator},#{creatTime},#{state})
+        INSERT INTO business_des(pid,image,content,title,describ,creator,creat_time,state) VALUES(#{pid},#{image},#{content},#{title},#{describ},#{creator},#{creatTime},#{state})
     </insert>
     <update id="updateInfo" parameterType="com.lmgroup.groupbusiness.domain.business.BusinessDesVO">
         update business_des
@@ -63,6 +63,15 @@
             </if>
             <if test="state!=null">
                 state=#{state},
+            </if>
+            <if test="pid!=null">
+                pid=#{pid},
+            </if>
+            <if test="describ!=null">
+                describ=#{describ},
+            </if>
+            <if test="title!=null">
+                title=#{title},
             </if>
         </set>
         where id=#{id}
