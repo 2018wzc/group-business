@@ -5,13 +5,10 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectResult;
-import com.lmgroup.groupbusiness.domain.user.SysLoginVO;
 import com.lmgroup.groupbusiness.utils.ParamException;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,15 +18,16 @@ import java.util.Random;
 public class UpLoadImg {
 
 
-    public static final String accessKeyId = "LTAIWS5gESliqo4o";
+    public static final String accessKeyId = "LTAIUE2jBMb1rPyv";
 
-    public static final String accessKeySecret = "p2CAeB7gqsqOTUeDDGZjm5r5N692RT";
+    public static final String accessKeySecret = "qUQlptfPpsfSxSxGuauzSldEs38eQ8";
 
-    public static final String endpoint = "oss-cn-qingdao.aliyuncs.com";
+    public static final String endpoint = "oss-cn-shenzhen.aliyuncs.com";
 
-    public static final String bucketName = "businessshop";
+    public static final String bucketName = "lmstore";
 
-    public static final String read_img_url = "https://businessshop.oss-cn-qingdao.aliyuncs.com";
+    public static final String read_img_url = "https://lmstore.oss-cn-shenzhen.aliyuncs.com";
+
 
     public static String upLoadFile(MultipartFile file) throws Exception {
         String result = null;
@@ -37,9 +35,9 @@ public class UpLoadImg {
         //创建oss客户端
         OSS client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
         try {
-            String name=file.getOriginalFilename();
+            String name = file.getOriginalFilename();
             String suffix = name.substring(name.lastIndexOf(".") + 0);
-            String fileName = getRandomFileName()+suffix;
+            String fileName = getRandomFileName() + suffix;
             //创建上传Object的Metadate
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(in.available());//定义长度，设置为获取到流的长度
@@ -50,8 +48,8 @@ public class UpLoadImg {
             //上传文件
             PutObjectResult putResult = client.putObject(bucketName, fileName, in, metadata);
             //获得解析的结果,是唯一MD5数字签名
-           // result = putResult.getETag();
-            result=read_img_url + "/" + fileName;
+            // result = putResult.getETag();
+            result = read_img_url + "/" + fileName;
             System.out.println(read_img_url + "/" + fileName);
         } catch (OSSException e) {
             throw new ParamException("上传阿里云oss服务器异常");
@@ -62,17 +60,18 @@ public class UpLoadImg {
         return result;
     }
 
-    public static void delImage(String imageName)throws Exception{
+    public static void delImage(String imageName) throws Exception {
         //创建OSSClient实例
-        OSSClient ossClient=new OSSClient(endpoint,accessKeyId,accessKeySecret);
+        OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
         //删除文件
-        ossClient.deleteObject(bucketName,imageName);
+        ossClient.deleteObject(bucketName, imageName);
         //关闭OSSClient
         ossClient.shutdown();
     }
 
     /**
      * 随机生成文件名
+     *
      * @return
      */
     public static String getRandomFileName() {
