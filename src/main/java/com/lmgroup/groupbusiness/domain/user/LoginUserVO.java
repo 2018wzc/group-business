@@ -1,5 +1,7 @@
 package com.lmgroup.groupbusiness.domain.user;
 
+import lombok.Data;
+
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -8,49 +10,17 @@ import java.util.Date;
  *
  * @author wangzichun 时间:2018/10/18 14:21
  */
+@Data
 public class LoginUserVO {
-      private int adminId;//用户id
-      private String userAccount;//用户名
-      private String userPassword;//密码
-      private String mdPssword;
-      private Timestamp creatTime;
-    public int getAdminId() {
-        return adminId;
-    }
 
-    public void setAdminId(int adminId) {
-        this.adminId = adminId;
-    }
+    private int adminId;//用户id
 
-    public String getUserAccount() {
-        return userAccount;
-    }
+    private String userAccount;//用户名
 
-    public void setUserAccount(String userAccount) {
-        this.userAccount = userAccount;
-    }
+    private String userPassword;//密码
 
-    public String getUserPassword() {
-        return userPassword;
-    }
+    private String mdPssword;
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
-    }
+    private Timestamp creatTime;
 
-    public String getMdPssword() {
-        return mdPssword;
-    }
-
-    public void setMdPssword(String mdPssword) {
-        this.mdPssword = mdPssword;
-    }
-
-    public Timestamp getCreatTime() {
-        return creatTime;
-    }
-
-    public void setCreatTime(Timestamp creatTime) {
-        this.creatTime = creatTime;
-    }
 }

@@ -1,6 +1,8 @@
 package com.lmgroup.groupbusiness.domain.business;
 
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -8,6 +10,7 @@ import java.util.List;
  *
  * @author wangzichun
  */
+@Data
 public class BusinessListVO {
 
     private int id;
@@ -26,67 +29,5 @@ public class BusinessListVO {
 
     private List<BusinessResVO> businessResVO;
 
-    public List<BusinessResVO> getBusinessResVO() {
-        return businessResVO;
-    }
 
-    public void setBusinessResVO(List<BusinessResVO> businessResVO) {
-        this.businessResVO = businessResVO;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEnglisName() {
-        return englisName;
-    }
-
-    public void setEnglisName(String englisName) {
-        this.englisName = englisName;
-    }
-
-    public int getReorder() {
-        return reorder;
-    }
-
-    public void setReorder(int reorder) {
-        this.reorder = reorder;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }

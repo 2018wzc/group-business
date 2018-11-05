@@ -1,6 +1,8 @@
 package com.lmgroup.groupbusiness.domain.business;
 
 
+import lombok.Data;
+
 import java.sql.Timestamp;
 
 /**
@@ -8,6 +10,7 @@ import java.sql.Timestamp;
  *
  * @author wangzichun
  */
+@Data
 public class BusinessDesVO {
 
     private int id;
@@ -30,84 +33,4 @@ public class BusinessDesVO {
 
     private int state;//状态,1启用,0禁用
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getPid() {
-        return pid;
-    }
-
-    public void setPid(int pid) {
-        this.pid = pid;
-    }
-
-    public Timestamp getCreatTime() {
-        return creatTime;
-    }
-
-    public void setCreatTime(Timestamp creatTime) {
-        this.creatTime = creatTime;
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getDescrib() {
-        return describ;
-    }
-
-    public void setDescrib(String describ) {
-        this.describ = describ;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
-    }
 }
