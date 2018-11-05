@@ -11,21 +11,22 @@ import javax.servlet.MultipartConfigElement;
 @Configuration
 public class TomcatConfig {
     @Value("${spring.http.multipart.max-file-size}")
-    private String MaxFileSize;
+    private  String MaxFileSize;
     @Value("${spring.http.multipart.max-request-size}")
-    private String MaxRequestSize;
+    private  String MaxRequestSize;
 
     /**
      * 文件上传配置
+     *
      * @return
      */
     @Bean
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         //文件最大
-        factory.setMaxFileSize("10240KB"); //KB,MB
+        factory.setMaxFileSize(MaxFileSize); //KB,MB
         /// 设置总上传数据总大小
-        factory.setMaxRequestSize("102400KB");
+        factory.setMaxRequestSize(MaxRequestSize);
         return factory.createMultipartConfig();
     }
 }
