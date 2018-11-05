@@ -1,6 +1,9 @@
 package com.lmgroup.groupbusiness.controller.business;
 
+import com.lmgroup.groupbusiness.domain.user.LoginUserVO;
+import com.lmgroup.groupbusiness.service.LoginUserService;
 import io.swagger.annotations.*;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +15,10 @@ import com.lmgroup.groupbusiness.utils.ParamException;
 import com.lmgroup.groupbusiness.utils.commonAction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
+
+import static com.lmgroup.groupbusiness.utils.FormatDate.DateFormatStamp;
 
 
 @RestController
@@ -23,6 +29,8 @@ public class BusinessResAction extends commonAction {
 
     @Autowired
     private BusinessResService businessResService;
+    @Autowired
+    private LoginUserService userService;
 
     /**
      * 查询集团商城子业务菜单列表-后台分页查询
@@ -60,6 +68,7 @@ public class BusinessResAction extends commonAction {
             @ApiImplicitParam(name = "pid", value = "父业务菜单id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "type", value = "1,功能按钮,0层级菜单", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "url", value = "管理系统路径", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
@@ -71,7 +80,27 @@ public class BusinessResAction extends commonAction {
         int state = Integer.parseInt(req.getParameter("state"));
         int type = Integer.parseInt(req.getParameter("type"));
         int adminId = Integer.parseInt(req.getParameter("adminId"));
-        businessResService.add(name, pid, state, adminId,type);
+        String url = req.getParameter("url");
+
+        if (StringUtils.isBlank(name)) {
+            throw new ParamException("参数错误");
+        }
+        if (state < 1 || adminId < 1 || pid < 1) {
+            throw new ParamException("参数错误");
+        }
+        BusinessResVO businessRes = new BusinessResVO();
+        businessRes.setName(name);
+        businessRes.setType(type);
+        businessRes.setUrl(url);
+        businessRes.setPid(pid);
+        LoginUserVO userVO = userService.selectById(adminId);
+        if (userVO == null) {
+            throw new ParamException("操作人账号不存在");
+        }
+        businessRes.setCreator(userVO.getUserAccount());
+        businessRes.setCreatTime(DateFormatStamp(new Date()));
+        businessRes.setState(state);
+        businessResService.add(businessRes);
         sendResult(resp, null);
     }
 
@@ -112,6 +141,7 @@ public class BusinessResAction extends commonAction {
             @ApiImplicitParam(name = "name", value = "集团子业务菜单名称", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "pid", value = "父业务菜单id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "type", value = "1,功能按钮,0层级菜单", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "url", value = "管理系统路径", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
@@ -121,6 +151,7 @@ public class BusinessResAction extends commonAction {
         int id = Integer.parseInt(req.getParameter("id"));
         int state = Integer.parseInt(req.getParameter("state"));
         String name = req.getParameter("name");
+        String url = req.getParameter("url");
         int pid = Integer.parseInt(req.getParameter("pid"));
         int type = Integer.parseInt(req.getParameter("type"));
         if (id < 1 || state < 1||pid<1) {

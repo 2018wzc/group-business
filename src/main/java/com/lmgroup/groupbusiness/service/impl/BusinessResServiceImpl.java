@@ -41,24 +41,8 @@ public class BusinessResServiceImpl implements BusinessResService {
     }
 
     @Override
-    public void add(String name, int pid, int state, int adminId, int type) throws Exception {
-        if (StringUtils.isBlank(name)) {
-            throw new ParamException("参数错误");
-        }
-        if (state < 1 || adminId < 1 || pid < 1) {
-            throw new ParamException("参数错误");
-        }
-        BusinessResVO businessRes = new BusinessResVO();
-        businessRes.setName(name);
-        businessRes.setType(type);
-        businessRes.setPid(pid);
-        LoginUserVO userVO = loginUserDao.selectById(adminId);
-        if (userVO == null) {
-            throw new ParamException("操作人账号不存在");
-        }
-        businessRes.setCreator(userVO.getUserAccount());
-        businessRes.setCreatTime(DateFormatStamp(new Date()));
-        businessRes.setState(state);
+    public void add(BusinessResVO businessRes) throws Exception {
+
         businessResDao.addBusiness(businessRes);
     }
 

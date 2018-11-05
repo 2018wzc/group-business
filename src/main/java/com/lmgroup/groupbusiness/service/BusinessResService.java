@@ -18,7 +18,7 @@ public interface BusinessResService {
      * @param
      * @return
      */
-    void add(String name, int pid, int state, int adminId, int type) throws Exception;
+    void add(BusinessResVO businessRes) throws Exception;
 
     /**
      * 详情集团商城子业务菜单

@@ -23,6 +23,8 @@ public class BusinessResVO {
 
     private int type;//1,功能按钮(默认),0层级菜单
 
+    private String url;
+
     public int getId() {
         return id;
     }
@@ -77,5 +79,13 @@ public class BusinessResVO {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

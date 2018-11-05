@@ -22,6 +22,8 @@ public class BusinessListVO {
 
     private int type;//1,功能按钮,0层级菜单(默认)
 
+    private String url;
+
     private List<BusinessResVO> businessResVO;
 
     public List<BusinessResVO> getBusinessResVO() {
@@ -78,5 +80,13 @@ public class BusinessListVO {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

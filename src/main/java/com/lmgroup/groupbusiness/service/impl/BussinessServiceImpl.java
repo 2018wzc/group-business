@@ -65,6 +65,7 @@ public class BussinessServiceImpl implements BussinessService {
             listVO.setReorder(bussiness.getReorder());
             listVO.setPath(bussiness.getPath());
             listVO.setType(bussiness.getType());
+            listVO.setUrl(bussiness.getUrl());
             businessListVOS.add(listVO);
         }
         return businessListVOS;

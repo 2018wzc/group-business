@@ -9,9 +9,10 @@
         <result column="creator" property="creator" jdbcType="VARCHAR"/>
         <result column="state" property="state" jdbcType="INTEGER"/>
         <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, res_name, pid,state,creator,creat_time,type
+        id, res_name, pid,state,creator,creat_time,type,url
     </sql>
     <select id="listInfo" resultMap="BusinessRes" parameterType="hashmap">
         select
@@ -32,7 +33,7 @@
     </select>
 
     <insert id="addBusiness" parameterType="com.lmgroup.groupbusiness.domain.business.BusinessResVO">
-        INSERT INTO business_res(res_name,pid,creator,creat_time,state,type) VALUES(#{name},#{pid},#{creator},#{creatTime},#{state},#{type})
+        INSERT INTO business_res(res_name,pid,creator,creat_time,state,type,url) VALUES(#{name},#{pid},#{creator},#{creatTime},#{state},#{type},#{url})
     </insert>
     <update id="updateInfo" parameterType="com.lmgroup.groupbusiness.domain.business.BusinessResVO">
         update business_res
@@ -48,6 +49,9 @@
             </if>
             <if test="type!=null">
                 type=#{type},
+            </if>
+            <if test="url!=null">
+                url=#{url},
             </if>
         </set>
         where id=#{id}
