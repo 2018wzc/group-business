@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 事务测试
+ *
+ * @author wangzichun 时间:2018/11/05
+ */
 @RestController
 public class TestTransact extends commonAction {
 

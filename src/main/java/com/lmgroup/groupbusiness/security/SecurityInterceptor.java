@@ -25,10 +25,11 @@ public class SecurityInterceptor implements HandlerInterceptor {
     @Autowired
     private LoginUserService loginUserService;
 
+    //在请求处理之前进行调用（Controller方法调用之前
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //验证权限
-        if (this.hasPermission(handler,request)) {
+        if (this.hasPermission(handler, request)) {
             return true;
         }
         //null==request.getHeader("x-requested-with")TODO 暂时用这个来判断是否为ajax请求
@@ -43,7 +44,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
      * @param handler
      * @return
      */
-    private boolean hasPermission(Object handler,HttpServletRequest request) throws Exception{
+    private boolean hasPermission(Object handler, HttpServletRequest request) throws Exception {
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             //获取方法上的注解
@@ -56,15 +57,15 @@ public class SecurityInterceptor implements HandlerInterceptor {
             //如果标记了注解,则判断权限
             if (requiredPermission != null && StringUtils.isNotBlank(requiredPermission.value())) {
                 //redis或者数据库中获取该用户的权限信息,并判断是否有权限
-                int  adminId=Integer.parseInt(request.getParameter("adminId"));
-                String tokenId=request.getParameter("tokenId");
-                if(adminId<1){
+                int adminId = Integer.parseInt(request.getParameter("adminId"));
+                String tokenId = request.getParameter("tokenId");
+                if (adminId < 1) {
                     throw new ParamException("用户id不能为空");
                 }
-                if(StringUtil.isBlank(tokenId)){
+                if (StringUtil.isBlank(tokenId)) {
                     throw new ParamException("tokenId不能为空");
                 }
-                Set<String> permissionSet = loginUserService.getPermission(adminId,tokenId);
+                Set<String> permissionSet = loginUserService.getPermission(adminId, tokenId);
                 if (CollectionUtils.isEmpty(permissionSet)) {
                     return false;
                 }
@@ -75,11 +76,14 @@ public class SecurityInterceptor implements HandlerInterceptor {
     }
 
 
+    //请求处理之后进行调用，但是在视图被渲染之前（Controller方法调用之后）
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
 
     }
 
+
+    //在整个请求结束之后被调用，也就是在DispatcherServlet 渲染了对应的视图之后执行（主要是用于进行资源清理工作）
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
 
