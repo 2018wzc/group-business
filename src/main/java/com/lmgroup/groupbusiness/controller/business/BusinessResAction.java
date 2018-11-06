@@ -2,6 +2,7 @@ package com.lmgroup.groupbusiness.controller.business;
 
 import com.lmgroup.groupbusiness.domain.user.LoginUserVO;
 import com.lmgroup.groupbusiness.service.LoginUserService;
+import com.lmgroup.groupbusiness.utils.ResponseResult;
 import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -53,7 +54,13 @@ public class BusinessResAction extends commonAction {
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         List<BusinessResVO> list = businessResService.list(pageSize, currentPage);
         int count = businessResService.selectCount(0);
-        sendPageResult(resp, list, count);
+        ResponseResult rs = new ResponseResult();
+        rs.setData(list);
+        rs.setPageCount(list.size());
+        rs.setCount(count);
+        rs.setCurrentPage(currentPage);
+        rs.setPageSize(pageSize);
+        sendPageResult(resp, rs);
     }
 
     /**
@@ -184,8 +191,10 @@ public class BusinessResAction extends commonAction {
             throw new ParamException("参数错误");
         }
         List<BusinessResVO> list = businessResService.queryByPid(pid);
-        int count=list.size();
-        sendPageResult(resp, list, count);
+        ResponseResult rs = new ResponseResult();
+        rs.setData(list);
+        rs.setPageCount(list.size());
+        sendPageResult(resp, rs);
     }
 
 }

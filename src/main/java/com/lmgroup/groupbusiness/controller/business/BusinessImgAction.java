@@ -5,11 +5,13 @@ import com.lmgroup.groupbusiness.security.PermissionConstants;
 import com.lmgroup.groupbusiness.security.RequiredPermission;
 import com.lmgroup.groupbusiness.service.BusinessImgService;
 import com.lmgroup.groupbusiness.utils.ParamException;
+import com.lmgroup.groupbusiness.utils.ResponseResult;
 import com.lmgroup.groupbusiness.utils.commonAction;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
+import static com.lmgroup.groupbusiness.security.cipher.UpLoadImg.delImage;
 import static com.lmgroup.groupbusiness.security.cipher.UpLoadImg.upLoadFile;
 
 @RestController
@@ -55,7 +58,13 @@ public class BusinessImgAction extends commonAction {
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         List<BusinessImgVO> list = businessImgService.listInfo(pageSize, currentPage);
         int count = businessImgService.queryCount();
-        sendPageResult(resp, list, count);
+        ResponseResult rs = new ResponseResult();
+        rs.setData(list);
+        rs.setPageCount(list.size());
+        rs.setCount(count);
+        rs.setCurrentPage(currentPage);
+        rs.setPageSize(pageSize);
+        sendPageResult(resp, rs);
     }
 
 
@@ -103,6 +112,7 @@ public class BusinessImgAction extends commonAction {
         sendResult(resp, null);
     }
 
+
     @ApiOperation(value = "更新状态是否启用首页轮播图片")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "id", dataType = "int", paramType = "query", required = true),
@@ -115,7 +125,50 @@ public class BusinessImgAction extends commonAction {
     public void update(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         int id = Integer.parseInt(req.getParameter("id"));
         int state = Integer.parseInt(req.getParameter("state"));
-        businessImgService.update(id, state);
+        if (id < 1 || state < 1) {
+            throw new ParamException("参数错误");
+        }
+        BusinessImgVO imagvo = businessImgService.date(id);
+        imagvo.setId(id);
+        imagvo.setState(state);
+        businessImgService.update(imagvo);
+        sendResult(resp, null);
+    }
+
+
+    @ApiOperation(value = "修改首页轮播图片")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "title", value = "图片标题", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "image", value = "单个图片文件", dataType = "files", paramType = "multipart/form-data", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/updateAll", method = RequestMethod.POST)
+    @RequiredPermission(PermissionConstants.NOLOGIN)
+    public void updateAll(HttpServletResponse resp, HttpServletRequest req, @RequestParam("image") MultipartFile file) throws Exception {
+        int id = Integer.parseInt(req.getParameter("id"));
+        int state = Integer.parseInt(req.getParameter("state"));
+        String title = req.getParameter("title");
+        if (id < 1 || state < 1) {
+            throw new ParamException("参数错误");
+        }
+        BusinessImgVO imgVO = new BusinessImgVO();
+        if (!file.isEmpty()) {
+            String image = upLoadFile(file);
+            imgVO.setImage(image);
+        }
+        BusinessImgVO businessImgVO = businessImgService.date(id);
+        String imgPath = businessImgVO.getImage();
+        if (StringUtils.isNotBlank(imgPath)) {
+            String name = imgPath.substring(imgPath.lastIndexOf("/") + 1);
+            delImage(name);
+        }
+        imgVO.setId(id);
+        imgVO.setTitle(title);
+        imgVO.setState(state);
+        businessImgService.update(imgVO);
         sendResult(resp, null);
     }
 

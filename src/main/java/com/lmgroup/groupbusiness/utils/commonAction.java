@@ -55,21 +55,16 @@ public class commonAction {
      * 分页
      *
      * @param resp
-     * @param data
-     * @param count
+     * @param rspResult
      * @throws IOException
      */
-    protected void sendPageResult(HttpServletResponse resp, Object data, int count) throws IOException {
+    protected void sendPageResult(HttpServletResponse resp, ResponseResult rspResult) throws IOException {
         gson = new Gson();
-        ResponseResult rs = new ResponseResult();
+        ResponseResult rs=rspResult;
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Content-type", "text/html;charset=UTF-8");
         rs.setCode(200);
         rs.setSuccess(true);
-        if (data != null) {
-            rs.setData(data);
-            rs.setCount(count);
-        }
         String result = gson.toJson(rs);
         logger.info(result);
         resp.getWriter().write(result);

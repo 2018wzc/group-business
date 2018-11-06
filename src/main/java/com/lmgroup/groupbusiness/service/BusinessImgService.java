@@ -47,5 +47,5 @@ public interface BusinessImgService {
     /*
     更新是否启用状态
      */
-    void update(int id, int state) throws Exception;
+    void update(BusinessImgVO imgVO) throws Exception;
 }

@@ -1,5 +1,6 @@
 package com.lmgroup.groupbusiness.controller.business;
 
+import com.lmgroup.groupbusiness.utils.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -64,7 +65,13 @@ public class BusinessDesAction extends commonAction {
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         List<BusinessDesVO> list = businessDesService.list(pageSize, currentPage);
         int count = businessDesService.selectCount(0);
-        sendPageResult(resp, list, count);
+        ResponseResult rs = new ResponseResult();
+        rs.setData(list);
+        rs.setCount(count);
+        rs.setPageCount(list.size());
+        rs.setPageSize(pageSize);
+        rs.setCurrentPage(currentPage);
+        sendPageResult(resp, rs);
     }
 
     /**
@@ -215,7 +222,11 @@ public class BusinessDesAction extends commonAction {
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         List<BusinessDesVO> list = businessDesService.queryByType(pageSize, currentPage, typeId);
         int count = businessDesService.selectCount(typeId);
-        sendPageResult(resp, list, count);
+        ResponseResult rs = new ResponseResult();
+        rs.setData(list);
+        rs.setPageCount(list.size());
+        rs.setCount(count);
+        sendPageResult(resp, rs);
     }
 
     /**
@@ -235,8 +246,10 @@ public class BusinessDesAction extends commonAction {
             throw new ParamException("参数错误");
         }
         List<BusinessDesVO> list = businessDesService.queryByPid(pid);
-        int count = list.size();
-        sendPageResult(resp, list, count);
+        ResponseResult rs = new ResponseResult();
+        rs.setData(list);
+        rs.setPageCount(list.size());
+        sendPageResult(resp, rs);
     }
 
     @ApiOperation(value = "图片上传接口")

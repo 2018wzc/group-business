@@ -69,13 +69,7 @@ public class BusinessImgServiceImpl implements BusinessImgService {
     }
 
     @Override
-    public void update(int id,int state) throws Exception{
-        if (id < 1 || state < 1) {
-            throw new ParamException("参数错误");
-        }
-        BusinessImgVO businessImgVO=new BusinessImgVO();
-        businessImgVO.setId(id);
-        businessImgVO.setState(state);
-         businessImgDao.update(businessImgVO);
+    public void update(BusinessImgVO imgVO) throws Exception{
+         businessImgDao.update(imgVO);
     }
 }

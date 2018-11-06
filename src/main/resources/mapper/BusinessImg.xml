@@ -46,6 +46,9 @@
             <if test="state!=null">
                 state=#{state},
             </if>
+            <if test="image!=null">
+                image=#{image},
+            </if>
         </set>
         where id=#{id}
     </update>

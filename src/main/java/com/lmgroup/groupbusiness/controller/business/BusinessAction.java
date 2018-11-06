@@ -2,6 +2,7 @@ package com.lmgroup.groupbusiness.controller.business;
 
 import com.lmgroup.groupbusiness.domain.user.LoginUserVO;
 import com.lmgroup.groupbusiness.service.LoginUserService;
+import com.lmgroup.groupbusiness.utils.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -51,7 +52,11 @@ public class BusinessAction extends commonAction {
     public void list(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         List<BusinessListVO> list = bussinessService.list();
         int count = list.size();
-        sendPageResult(resp, list, count);
+        ResponseResult rs = new ResponseResult();
+        rs.setCount(count);
+        rs.setCurrentPage(list.size());
+        rs.setData(list);
+        sendPageResult(resp, rs);
     }
 
     /**
@@ -75,7 +80,13 @@ public class BusinessAction extends commonAction {
         int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         List<BussinessVO> list = bussinessService.listInfo(pageSize, currentPage);
         int count = bussinessService.selectCount();
-        sendPageResult(resp, list, count);
+        ResponseResult rs = new ResponseResult();
+        rs.setPageCount(list.size());
+        rs.setCount(count);
+        rs.setData(list);
+        rs.setPageSize(pageSize);
+        rs.setCurrentPage(currentPage);
+        sendPageResult(resp, rs);
     }
 
     /**
