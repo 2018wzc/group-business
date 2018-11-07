@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.lmgroup.groupbusiness.security.cipher.UpLoadImg.delImage;
@@ -59,8 +60,9 @@ public class BusinessImgAction extends commonAction {
         List<BusinessImgVO> list = businessImgService.listInfo(pageSize, currentPage);
         int count = businessImgService.queryCount();
         ResponseResult rs = new ResponseResult();
+        double f1 = new BigDecimal((float)count/pageSize).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        rs.setPageCount((int)Math.ceil(f1));
         rs.setData(list);
-        rs.setPageCount(list.size());
         rs.setCount(count);
         rs.setCurrentPage(currentPage);
         rs.setPageSize(pageSize);
@@ -88,25 +90,26 @@ public class BusinessImgAction extends commonAction {
     @ApiOperation(value = "首页轮播图片新增")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "title", value = "图片标题", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "image", value = "单个图片文件", dataType = "files", paramType = "multipart/form-data", required = true),
+            @ApiImplicitParam(name = "image", value = "图片名称", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "adminId", value = "用户Id", dataType = "Integer", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @RequiredPermission(PermissionConstants.NOLOGIN)
-    public void add(HttpServletResponse resp, HttpServletRequest req, @RequestParam("image") MultipartFile file) throws Exception {
+    public void add(HttpServletResponse resp, HttpServletRequest req) throws Exception {
         String title = req.getParameter("title");
+        String image = req.getParameter("image");
         int state = Integer.parseInt(req.getParameter("state"));
         if (state < 1) {
             throw new ParamException("参数错误");
         }
         BusinessImgVO businessImgVO = new BusinessImgVO();
-        if (!file.isEmpty()) {
-            String image = upLoadFile(file);
-            businessImgVO.setImage(image);
+        if (StringUtils.isBlank(image)) {
+            throw new ParamException("参数错误");
         }
         businessImgVO.setTitle(title);
+        businessImgVO.setImage(image);
         businessImgVO.setState(state);
         businessImgService.add(businessImgVO);
         sendResult(resp, null);
@@ -141,7 +144,7 @@ public class BusinessImgAction extends commonAction {
             @ApiImplicitParam(name = "id", value = "id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "title", value = "图片标题", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "image", value = "单个图片文件", dataType = "files", paramType = "multipart/form-data", required = true),
+            @ApiImplicitParam(name = "image", value = "图片名称", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
     })
@@ -151,22 +154,18 @@ public class BusinessImgAction extends commonAction {
         int id = Integer.parseInt(req.getParameter("id"));
         int state = Integer.parseInt(req.getParameter("state"));
         String title = req.getParameter("title");
+        String image = req.getParameter("image");
         if (id < 1 || state < 1) {
             throw new ParamException("参数错误");
         }
         BusinessImgVO imgVO = new BusinessImgVO();
-        if (!file.isEmpty()) {
-            String image = upLoadFile(file);
+        if(StringUtils.isNotBlank(image)){
             imgVO.setImage(image);
         }
-        BusinessImgVO businessImgVO = businessImgService.date(id);
-        String imgPath = businessImgVO.getImage();
-        if (StringUtils.isNotBlank(imgPath)) {
-            String name = imgPath.substring(imgPath.lastIndexOf("/") + 1);
-            delImage(name);
+        if(StringUtils.isNotBlank(title)){
+            imgVO.setTitle(title);
         }
         imgVO.setId(id);
-        imgVO.setTitle(title);
         imgVO.setState(state);
         businessImgService.update(imgVO);
         sendResult(resp, null);
@@ -186,6 +185,37 @@ public class BusinessImgAction extends commonAction {
             throw new ParamException("参数错误");
         }
         businessImgService.delete(id);
+        sendResult(resp, null);
+    }
+
+    @ApiOperation(value = "图片上传接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "image", value = "单个图片文件", dataType = "files", paramType = "multipart/form-data", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/upLoadImg", method = RequestMethod.POST, consumes = "multipart/form-data")
+    @RequiredPermission(PermissionConstants.NOLOGIN)
+    public void upLoadImg(HttpServletResponse resp, HttpServletRequest req, @RequestParam("image") MultipartFile file) throws Exception {
+        String imgPath = upLoadFile(file);
+        sendResult(resp, imgPath);
+    }
+
+    @ApiOperation(value = "图片删除接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "image", value = "图片名称", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "adminId", value = "用户id", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "tokenId", value = "临时tokenId", dataType = "String", paramType = "query", required = true),
+    })
+    @RequestMapping(value = "/deleteImg", method = RequestMethod.POST)
+    @RequiredPermission(PermissionConstants.NOLOGIN)
+    public void deleteImg(HttpServletResponse resp, HttpServletRequest req) throws Exception {
+        String image = req.getParameter("image");
+        if (StringUtils.isBlank(image)) {
+            throw new ParamException("参数错误");
+        }
+        String name = image.substring(image.lastIndexOf("/") + 1);
+        delImage(name);
         sendResult(resp, null);
     }
 }

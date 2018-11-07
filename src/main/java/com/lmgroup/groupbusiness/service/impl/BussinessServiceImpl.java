@@ -39,7 +39,7 @@ public class BussinessServiceImpl implements BussinessService {
             pageSize = 10;
         }
         if (currentPage < 0) {
-            throw new ParamException("参数错误");
+            currentPage=0;
         }
         HashMap hashMap = new HashMap();
         hashMap.put("pageSize", pageSize);

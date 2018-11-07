@@ -24,6 +24,7 @@ import com.lmgroup.groupbusiness.utils.commonAction;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -81,7 +82,8 @@ public class BusinessAction extends commonAction {
         List<BussinessVO> list = bussinessService.listInfo(pageSize, currentPage);
         int count = bussinessService.selectCount();
         ResponseResult rs = new ResponseResult();
-        rs.setPageCount(list.size());
+        double f1 = new BigDecimal((float) count / pageSize).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        rs.setPageCount((int) Math.ceil(f1));
         rs.setCount(count);
         rs.setData(list);
         rs.setPageSize(pageSize);
@@ -118,7 +120,7 @@ public class BusinessAction extends commonAction {
         int adminId = Integer.parseInt(req.getParameter("adminId"));
         String path = req.getParameter("path");
         String url = req.getParameter("url");
-        if (StringUtils.isBlank(name) || StringUtils.isBlank(englishName) || StringUtils.isBlank(path)|| StringUtils.isBlank(url)) {
+        if (StringUtils.isBlank(name) || StringUtils.isBlank(englishName) || StringUtils.isBlank(path) || StringUtils.isBlank(url)) {
             throw new ParamException("参数错误");
         }
         if (state < 1 || adminId < 1 || reorder < 1) {
@@ -176,8 +178,8 @@ public class BusinessAction extends commonAction {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "父业务菜单Id", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "state", value = "状态,1启用,2未启用(默认)", dataType = "int", paramType = "query", required = true),
-            @ApiImplicitParam(name = "name", value = "父业务菜单名称", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "englisName", value = "父业务菜单英文名称(大写)", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "name", value = "父业务菜单名称", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "englisName", value = "父业务菜单英文名称(大写)", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "reorder", value = "优先级", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "type", value = "1,功能按钮,0层级菜单(默认)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "path", value = "页面路径指向('/'+小写英文名称+'/')", dataType = "String", paramType = "query", required = true),
@@ -200,9 +202,16 @@ public class BusinessAction extends commonAction {
             throw new ParamException("参数错误");
         }
         BussinessVO bussinessVO = new BussinessVO();
+        if (StringUtils.isNotBlank(name)) {
+            bussinessVO.setName(name);
+        }
+        if (StringUtils.isNotBlank(englishName)) {
+            bussinessVO.setEnglisName(englishName);
+        }
+        if (StringUtils.isNotBlank(englishName)) {
+            bussinessVO.setEnglisName(englishName);
+        }
         bussinessVO.setReorder(reorder);
-        bussinessVO.setName(name);
-        bussinessVO.setEnglisName(englishName);
         bussinessVO.setPath(path);
         bussinessVO.setUrl(url);
         bussinessVO.setType(type);
