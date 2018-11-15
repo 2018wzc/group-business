@@ -1,0 +1,164 @@
+<!DOCTYPE  SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:https="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+</head>
+<style>
+    .layui-input.y {
+        width: 300px;
+    }
+</style>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>身体健康检测系统</legend>
+</fieldset>
+
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md9">
+            <div class="layui-card">
+                <div class="layui-card-header">开始进行身体检测扫描</div>
+                <div class="layui-card-body">
+
+                    <!--  <div class="layui-row layui-col-space15">
+                          <div class="layui-col-md4">
+                              <div class="layui-card layui-bg-gray">
+                                  <div class="layui-card-body">
+                                      djfsjf111
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="layui-col-md4">
+                              <div class="layui-card layui-bg-gray">
+                                  <div class="layui-card-body">
+                                      djfsjf222
+                                  </div>
+                              </div>
+                          </div>
+                      </div>-->
+                    <div class="layui-row">
+                        <div class="layui-col-md4">
+                            <img src="/image/humen2.jpg" style="height:300px;"/>
+                        </div>
+                        <div class="layui-col-md8" style="height: 290px;background-color: #f5f5f5;">
+                            <form class="layui-form" action="">
+                                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                                    <legend>填写信息</legend>
+                                </fieldset>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">身高:</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="title" lay-verify="title" autocomplete="off"
+                                               placeholder="请输入标题" class="layui-input y">
+                                    </div>
+                                    <label class="layui-form-label">体重:</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="title" lay-verify="title" autocomplete="off"
+                                               placeholder="请输入标题" class="layui-input y">
+                                    </div>
+                                    <div class="layui-input-block">
+                                        <textarea placeholder="请输入内容"
+                                                  class="layui-textarea">您今日的身体状况良好,请继续保持!!</textarea>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">个人信息</div>
+                <div class="layui-card-body" style="height: 300px;">
+                    身高: xxxcm
+                    <br/>
+                    体重:xxkg
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md9">
+            <div class="layui-card">
+                <div class="layui-card-header">签到</div>
+                <div class="layui-card-body" style="height: 150px;">
+                    <div class="layui-col-md2">
+                        <div class="layui-card">
+                            <div class="layui-card-header">跑步数</div>
+                            <div class="layui-card-body">
+                                <i class="layui-icon layui-icon-face-smile" style="font-size: 30px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md2">
+                        <div class="layui-card">
+                            <div class="layui-card-header">水果</div>
+                            <div class="layui-card-body">
+                                <i class="layui-icon layui-icon-water" style="font-size: 30px;"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md2">
+                        <div class="layui-card">
+                            <div class="layui-card-header">米饭</div>
+                            <div class="layui-card-body">
+                                <i class="layui-icon layui-icon-face-smile" style="font-size: 30px;"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md2">
+                        <div class="layui-card">
+                            <div class="layui-card-header">水</div>
+                            <div class="layui-card-body">
+                                <i class="layui-icon layui-icon-face-smile" style="font-size: 30px;"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">饼图</div>
+                <div class="layui-card-body">
+                    结合 layui 的栅格系统<br>
+                    轻松实现响应式布局
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">报表</div>
+                <div class="layui-card-body">
+                    结合 layui 的栅格系统<br>
+                    轻松实现响应式布局
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="/layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['element', 'layer'], function () {
+        var element = layui.element;
+        var layer = layui.layer;
+
+        //监听折叠
+        element.on('collapse(test)', function (data) {
+            layer.msg('展开状态：' + data.show);
+        });
+    });
+</script>
+</html>

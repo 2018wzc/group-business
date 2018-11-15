@@ -2,38 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lmgroup.groupbusiness.dao.user.LoginUserDao">
     <resultMap id="LoginUser" type="com.lmgroup.groupbusiness.domain.user.LoginUserVO">
-        <id column="adminid" property="adminId" jdbcType="INTEGER"/>
-        <result column="admin_name" property="userAccount" jdbcType="VARCHAR"/>
-        <result column="password" property="userPassword" jdbcType="VARCHAR"/>
+        <id column="admin_id" property="adminId" jdbcType="INTEGER"/>
+        <result column="user_account" property="userAccount" jdbcType="VARCHAR"/>
+        <result column="user_password" property="userPassword" jdbcType="VARCHAR"/>
         <result column="md_pssword" property="mdPssword" jdbcType="VARCHAR"/>
         <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-        adminid, admin_name,md_pssword
+        admin_id, user_account,user_password,md_pssword
     </sql>
     <select id="selectUserid"  resultType="java.lang.Integer" parameterType="java.lang.String">
-        select adminid
-        from business_user
-        where admin_name=#{userAccount}
+        select admin_id
+        from tsys_user
+        where user_account=#{userAccount}
     </select>
     <select id="selectinfo" resultMap="LoginUser" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
-        from business_user
-        where admin_name=#{userAccount}
+        from tsys_user
+        where user_account=#{userAccount}
     </select>
     <select id="selectById" resultMap="LoginUser" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from business_user
-        where adminid=#{adminId}
+        from tsys_user
+        where admin_id=#{adminId}
     </select>
     <insert id="insertinfo" parameterType="com.lmgroup.groupbusiness.domain.user.LoginUserVO">
-        INSERT INTO business_user(admin_name,password,md_pssword,creat_time) VALUES(#{userAccount},#{userPassword},#{mdPssword},#{creatTime})
+        INSERT INTO tsys_user(user_account,user_password,md_pssword,creat_time) VALUES(#{userAccount},#{userPassword},#{mdPssword},#{creatTime})
     </insert>
     <delete id="deleteUser" parameterType="java.lang.Integer">
-        delete from business_user
-        where adminid=#{adminId}
+        delete from tsys_user
+        where admin_id=#{adminId}
     </delete>
 
 </mapper>

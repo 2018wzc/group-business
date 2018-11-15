@@ -1,0 +1,102 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:https="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>登录页面</title>
+    <meta content="text/html" http-equiv="content-type"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/login-style.css" th:href="@{/css/login-style.css}"/>
+    <link rel="stylesheet" href="/layui/css/layui.css" th:href="@{/layui/css/layui.css}"/>
+</head>
+<body th:style="'background:url('+ @{https://api.uixsj.cn/bing/bing.php}+');'">
+<div class="container">
+    <div class="row login_bg">
+        <div class="col-md-8 col-md-offset-2 form-horizontal">
+            <h1 class="text-center" style="color: white;margin-bottom: 20px">
+                用户登录
+            </h1>
+            <div class="col-md-8 col-md-offset-2">
+                <div class="input-group form-group">
+                <span class="input-group-addon text-info text-center">
+                      帐号
+                </span>
+                    <input type="text" class="form-control" id="_loginId" placeholder="登录帐号"/>
+                </div>
+            </div>
+            <div class="col-md-8 col-md-offset-2">
+                <div class="input-group form-group">
+                <span class="input-group-addon text-info text-center">
+                      密码
+                </span>
+                    <input type="password" class="form-control" id="_loginPwd" placeholder="登录密码"/>
+                </div>
+            </div>
+            <div class="col-md-8 col-md-offset-2">
+                <div class="form-group">
+                    <button style="width: 100%" type="button" class=" btn  btn-primary" id="_loginBtn">登&nbsp;&nbsp;录
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<script src="/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}" type="text/javascript"></script>
+<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script src="/layui/layui.all.js" th:src="@{/layui/layui.all.js}" type="text/javascript"></script>
+<script type="text/javascript">
+    var layer = undefined;
+    layui.use('element', function () {
+        layer = layui.layer;
+    });
+
+    //引入jquery
+    $(function () {
+        //登录事件
+        $('#_loginBtn').click(function () {
+            var loginId = $('#_loginId').val();
+            var loginPwd = $('#_loginPwd').val();
+            //登录请求
+            doLogin(loginId, loginPwd);
+        });
+    });
+
+    //用户登录
+    function doLogin(_loginId, _loginPwd) {
+
+        if (null == _loginId || undefined == _loginId) {
+            alert('登录帐号无效');
+        }
+        if (null == _loginPwd || undefined == _loginPwd) {
+            alert('登录密码无效');
+        }
+        var loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $.ajax({
+            type: 'POST',
+            url: location.origin + '/login/doLogin',
+            data: {
+                userAccount: _loginId,
+                Password: _loginPwd
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                layer.close(loading);
+                if (data.success) {
+                    alert(1);
+                    window.location.href = '/business.html';
+                } else {
+                    alert(data.msg);
+                }
+            }
+        });
+
+    }
+
+</script>
+</body>
+</html>

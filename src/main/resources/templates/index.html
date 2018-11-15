@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org" >
-<head>
-    <meta charset="UTF-8" />
-    <title>HOLLE thymeleaf!!</title>
-</head>
+<!DOCTYPE  html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="layout">
+<head  th:include="layout :: htmlhead" th:with="title='红烧豆腐'" />
 <body>
 <td th:text="${name}">fedd</td>
+<section layout:fragment="content">
 
+</section>
 </body>
 <script th:inline="javascript">
     var message = [[${name}]];

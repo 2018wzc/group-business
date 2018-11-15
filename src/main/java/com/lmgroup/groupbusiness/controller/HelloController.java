@@ -16,8 +16,16 @@ public class HelloController {
     @RequestMapping(value = "/greeting")
     public ModelAndView test() {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("/index");
-        mv.addObject("name","欢迎使用Thymeleaf!");
+        mv.setViewName("/layout");
+        mv.addObject("name", "欢迎使用Thymeleaf!");
+        return mv;
+    }
+
+    @RequestMapping(value = "/login")
+    public ModelAndView login() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/login");
+        mv.addObject("name", "欢迎使用Thymeleaf!");
         return mv;
     }
 }
